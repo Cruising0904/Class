@@ -24,7 +24,7 @@ public static class Exam {
 			PreparedStatement prestmt = con.prepareStatement(sql);
 			ResultSet rs = prestmt.executeQuery();
 			while (rs.next()) {		
-				userlist.add(rs.getString(1) + "," + rs.getString(2) + "," + rs.getString(3));//()안에 숫자에 컬럼명 그대로 적어줘도됨
+				userlist.add(rs.getString(1) + "," + rs.getString(2) + "," + rs.getString(3));//()안에 숫자에 컬럼명 그대로 적어줘도 됨.
 			}			
 			DBConn2.closeCon();
 			return userlist;
