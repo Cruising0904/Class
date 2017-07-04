@@ -11,9 +11,9 @@ import java.util.Map;
 
 import Common.DBConn2;
 
-public class Board {
+public class JoinedSelect {
 	Connection con;
-	Board() throws ClassNotFoundException, SQLException{
+	JoinedSelect() throws ClassNotFoundException, SQLException{
 		con = DBConn2.getCon();
 	}
 	public List<Map> getCommentList(int boardNum) throws SQLException{
@@ -21,7 +21,6 @@ public class Board {
 		sql += " where b_num=? or b_num=?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1,  3);
-		ps.setInt(2,  4);
 		
 		ResultSet rs = ps.executeQuery();
 		ArrayList commentList = new ArrayList();
@@ -49,7 +48,7 @@ public class Board {
 	}
 	public static void main(String[] args){
 		try {
-			Board cdao = new Board();
+			JoinedSelect cdao = new JoinedSelect();
 			List<Map> commentList = cdao.getCommentList(Integer.parseInt("1"));
 			for(Map m2 : commentList){
 				System.out.println(m2);
