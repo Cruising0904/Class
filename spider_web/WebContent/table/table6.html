@@ -5,34 +5,35 @@
 <title>Insert title here</title>
 </head>
 <script>
-function cal(){
-var row = parseInt(document.getElementById("row").value);
-var line = parseInt(document.getElementById("line").value);
-for(var i=0;i<=row;i++){
-	tableStr += "<tr>";
-	for(var j=0;j<=line;j++){
-	tableStr += "<td>[" +i+"</td>";
+function drawMatrix(){
+	var num1 = parseInt(document.getElementById("num1").value);
+	var num2 = parseInt(document.getElementById("num2").value);
+	var tableStr = "<table border='1'>";
+	for(var i=0;i<num1;i++){
+		tableStr += "<tr>";
+		for(var j=0;j<num2;j++){
+			tableStr +="<td>[" + i + "," + j +"]</td>"; 
+		}			
+		tableStr += "</tr>";
 	}
-	tableStr += "</tr>";
-}
-tableStr += "</table>";
-document.write(tableStr);
+	tableStr += "</table>";
+	document.getElementById("result_div").innerHTML = tableStr;
 }
 </script>
 <body>
-<form>
 	<table border="1">
-	<tr>
-	<td>테이블을 만들 row 갯수 입력</td>
-	<td><input type = "text" name ="row"></td>
-	</tr>
-	<tr>
-	<td>테이블을 만들 line 갯수 입력</td>
-	<td><input type = "text" name ="line"></td>
-	</tr>
-		</table>;
-		<input type="button" value="계산하기" onclick = "cal()"/>
-
-</form>
+		<tr>
+			<td>로우수 : <input type="text" name="num1" id="num1"/></td>
+			<td>컬럼수 : <input type="text" name="num2" id="num2"/></td>
+		</tr>
+		<tr> 
+			<td colspan="2" align="center"><input type="button" value="그리기" onclick="drawMatrix()"/></td>
+		</tr>
+	</table>
+	<div id="result_div"></div>
 </body>
+<script>
+var obj = document.getElementById("result_div");
+obj.innerHTML="<font color='red'>빨강글씨</font>";
+</script>
 </html>
