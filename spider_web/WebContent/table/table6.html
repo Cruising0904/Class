@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+function cal(){
+var row = parseInt(document.getElementById("row").value);
+var line = parseInt(document.getElementById("line").value);
+for(var i=0;i<=row;i++){
+	tableStr += "<tr>";
+	for(var j=0;j<=line;j++){
+	tableStr += "<td>[" +i+"</td>";
+	}
+	tableStr += "</tr>";
+}
+tableStr += "</table>";
+document.write(tableStr);
+}
+</script>
+<body>
+<form>
+	<table border="1">
+	<tr>
+	<td>테이블을 만들 row 갯수 입력</td>
+	<td><input type = "text" name ="row"></td>
+	</tr>
+	<tr>
+	<td>테이블을 만들 line 갯수 입력</td>
+	<td><input type = "text" name ="line"></td>
+	</tr>
+		</table>;
+		<input type="button" value="계산하기" onclick = "cal()"/>
+
+</form>
+</body>
+</html>

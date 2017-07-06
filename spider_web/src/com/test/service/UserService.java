@@ -8,7 +8,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.test.common.DBConn;
 import com.test.common.DBConn2;
 
 public class UserService {
@@ -110,43 +112,39 @@ public class UserService {
 	
 	return false;
 }
-	public boolean selectUser(HashMap<String, String> hm) {
-		con = null;
-		ps = null;
-		List<HashMap> userlist = new ArrayList<HashMap>();
+	public List<Map> selectUser(HashMap<String, String> hm){
+		Connection con = null;
+		PreparedStatement ps = null;
 		try {
-			con = DBConn2.getCon();
-			sql = "select ui.name, ui.id, ui.age, ui.class_num, ci.class_name from user_info as ui,class_info as ci"
-					+ "where user_info.name like %?%";
-					
+			String sql = "select user_num, user_id, user_pwd, user_name, class_num from user_info";
+			if(hm.get("name")!=null){
+				sql += " where user_name like ?";
+			}
+			con = DBConn.getCon();
 			ps = con.prepareStatement(sql);
-			ps.setString(1, hm.get("user_name"));
+			if(hm.get("name")!=null){
+				ps.setString(1, hm.get("name"));
+			}
 			ResultSet rs = ps.executeQuery();
-			ResultSetMetaData rsmd = rs.getMetaData();
+			List userList = new ArrayList();
 			while(rs.next()){
 				HashMap hm1 = new HashMap();
-				int colCount = rsmd.getColumnCount();
-				for(int i=1;i<=colCount;i++){
-					String colName = rsmd.getColumnName(i);
-					hm.put(colName, rs.getString(colName));
-				}
-				userlist.add(hm);
-				con.commit();
-				return true;
+				hm1.put("user_name", rs.getString("user_name"));
+				userList.add(hm1);
 			}
-		} catch (ClassNotFoundException e) {
+			return userList;
+		}catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
+		}finally{
 			try {
 				ps.close();
-				DBConn2.closeCon();
+				DBConn.closeCon();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
-	
-	return false;
-}
+		return null;
+	}
 }
