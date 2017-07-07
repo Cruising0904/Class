@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+	function makeSureForm() {
+		var nameObj = document.getElementById("name");
+		var passObj = document.getElementById("pass");
+		var dateObj = document.getElementById("s_date");
+		var chObjs = document.getElementsByName("ch"); // 체크박스같은경우 아이디값이 같기때문에 네임으로 받아와야함.
+		for(var i=0;i<chObjs.length;i++){  //배열로 들어간 chobjs 의 길이만큼 출력
+			if(chObjs[i].checked){    //chObjs 는 배열로 들어가서 chObjs[i].checked <-- 체크된게 있으면 트루로 들어가서 작동
+				alert((i+1)+"체크");   //onchange는 값이 변경되는순간 값을 비교하여 연산 수행 
+			}							//onkeyup 키가 입력되는 순간 실시간으로 
+		}
+		/* alert(dateObj.value);
+		 alert(nameObj.value);
+		 alert(passObj.value); */
+		//alert(chObj.value); 
+	}
+	function changeColor(){
+		var colorObj = document.getElementById("s_color");
+		
+		var txtObj = document.getElementById("txt");
+		var passObj = document.getElementById("pass");
+		var dateObj = document.getElementById("s_date");
+		txtObj.style = "color:"+colorObj.value;
+		passObj.style = "color:"+colorObj.value;
+		dateObj.style = "color:"+colorObj.value;
+	}
+</script>
+<body>
+<form>
+	색상
+	<input type="color" name="color" id="s_color" onchange="changeColor()"/>
+	<br /> 버튼
+	<input type="button" name="btn" value="버튼" onclick="makeSureForm()" />
+	<br /> 텍스트
+	<input type="text" name="txt" id="txt" />
+	<br /> 일자
+	<input type="date" name="s_date" />
+	<br /> 이메일
+	<input type="email" name="t_email" />
+	<br /> 비밀번호
+	<input type="password" name="pwd" />
+	<br /> 라디오
+	<input type="radio" name="s_radio" />
+	<br /> 체크박스
+	<input type="checkbox" name="ch" id="ch" value="1" /> 남
+	<br /> 체크박스
+	<input type="checkbox" name="ch" id="ch" value="2" /> 여
+	<br />리셋
+	<input type="reset" name="r_btn" value="리셋임당"/>
+	<br />
+	<input type="submit" name="s_btn" />
+</form>
+</body>
+</html>
