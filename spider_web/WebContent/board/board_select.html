@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>게시판자료찾기</title>
+</head>
+<script>
+function checkValue(){
+	var bNum=document.getElementById("board_num")
+	if(bNum.value.trim()==""){
+		alert("값을 입력해주세요")
+		return false;
+	}
+	return true;
+}
+</script>
+<body>
+<form method = "get" action="*.board" onsubmit = "return checkValue()">
+게시판 번호입력 : <input type="text" name="board_num" id ="board_num"><br/>
+<input type ="submit" value="찾기"> 
+<input type="hidden" name="command" value="SELECT">
+</form>
+</body>
+</html>

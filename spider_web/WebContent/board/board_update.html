@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>게시판자료삭제</title>
+</head>
+<script>
+function check_bNum(){
+	var bNum = document.getElementById("board_num");
+	var bpNum = parseInt(bNum.value);
+	if(bNum.value.trim()==""){
+		alert("유효하지 않은 값입니다");
+		return false;
+	}else if(isNaN(bpNum)){
+		alert("숫자만 입력가능");
+		return false;
+	}
+	return true;
+}
+function update(){
+	var check = document.getElementById("title");
+	var check1 = document.getElementById("content");
+	var writer = document.getElementById("writer");
+	var num = parseInt(writer.value);
+		if (check.value.trim() == "" && check1.value.trim() == "") {
+			alert("수정할 제목이나 내용을 입력해주세요")
+			return false;
+		} else if (isNaN(num)) {
+			alert("숫자를 입력하세요")
+			return false;
+		}
+		return true;
+	}
+</script>
+<body>
+<form method="get" action="*.board" onsubmit ="return check_bNum()">
+수정할 게시판 번호 : <input type="text" name="board_num" id="board_num">
+<input type="submit" value="찾기"><br/>
+
+<!-- <form method="get" action="*.board" onsubmit ="return update()"> -->
+제목 :<input type="text" name="title" id="title"><br/>
+내용 :<input type="text" name="content" id="content"><br/>
+글쓴이번호 :<input type="text" name="writer" id="writer"><br/>
+<input type="submit" value="수정">
+<input type="hidden" name="command" value="UPDATE">
+</form>
+</body>
+</html>

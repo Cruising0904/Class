@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>게시판자료찾기</title>
+</head>
+<script>
+function delete_num(){
+	var dNum = document.getElementById("d_num");
+	var pdNum = parseInt(dNum.value);
+	if(dNum.value.trim()==""){
+		alert("유효한 값을 입력하세요")
+		return false;
+	}else if(isNaN(pdNum)){
+		alert("숫자값을 입력해야합니다")
+		return false;
+	}
+	return true;
+}
+</script>
+<body>
+<form method="get" action="*.board" onsubmit="return delete_num()">
+삭제할 게시판 번호 : <input type="text" name ="d_num" id="d_num">
+<input type="submit" value="삭제">
+<input type="hidden" name="command" value="DELETE">
+</form>
+</body>
+</html>
