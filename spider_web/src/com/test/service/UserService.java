@@ -3,14 +3,12 @@ package com.test.service;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.test.common.DBConn;
 import com.test.common.DBConn2;
 
 public class UserService {
@@ -120,7 +118,7 @@ public class UserService {
 			if(hm.get("name")!=null){
 				sql += " where user_name like ?";
 			}
-			con = DBConn.getCon();
+			con = DBConn2.getCon();
 			ps = con.prepareStatement(sql);
 			if(hm.get("name")!=null){
 				ps.setString(1, hm.get("name"));
@@ -140,7 +138,7 @@ public class UserService {
 		}finally{
 			try {
 				ps.close();
-				DBConn.closeCon();
+				DBConn2.closeCon();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
