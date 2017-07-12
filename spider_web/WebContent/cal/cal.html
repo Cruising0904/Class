@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>계산기</title>
+</head>
+<script>
+	function checkValue() {
+		var num1Obj = document.getElementById("num1");
+		var num2Obj = document.getElementById("num2");
+		var opObj = document.getElementById("op");
+        var num1 = parseInt(num1Obj.value);
+        var num2 = parseInt(num2Obj.value);
+		if (num1Obj.value.trim() == "" || isNaN(num1)) {
+			alert("첫번째 값 정수로 입력하세요");
+			num1Obj.focus();
+			return false;
+		}       
+		if (num2Obj.value.trim() == "") {
+			alert("두번째 값 입력하세요");
+			return false;
+		} else if (isNaN(num2)) {
+			alert("숫자가 입력되지 않았다")
+			return false;
+		}
+		if (opObj.value == "") {
+			alert("연산자를 선택하세요");
+			return false;
+		}
+		return true;
+	}
+</script>
+<body>
+	<form method="get" action="*.cal" onsubmit="checkValue()">
+		<br/><table border="1">
+		<tr>
+		<td>숫자1</td>
+		<td>연산자1</td>
+		<td>숫자2</td>
+		</tr>
+		<tr>
+		<td><input type="text" name="num1" id="num1"></td>
+		<td><select name="op" id="op">
+			<option value="">선택</option>
+			<option value="+">더하기</option>
+			<option value="-">빼기</option>
+			<option value="*">곱하기</option>
+			<option value="/">나누기</option>
+			</select>
+		</td>
+		<td><input type="text" name="num2" id="num2"></td>
+		</tr>
+</table>
+		<input type="submit" value="계산하기">
+	</form>
+</body>
+</html>

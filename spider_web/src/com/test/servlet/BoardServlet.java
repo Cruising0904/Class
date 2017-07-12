@@ -3,6 +3,8 @@ package com.test.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -30,10 +32,10 @@ private static final long serialVersionUID = 1L;
 			hm = new HashMap();
 			String dNum = req.getParameter("d_num");
 			System.out.println("삭제할 번호 :" + dNum);
-			hm.put("dNum", dNum);
+			hm.put("d_num", dNum);
 			if(bs.deleteBoard(hm)){
 				System.out.println("정상적으로 삭제되었습니다");
-				doProcess(resq, "정상적으로 삭제되었습니다*");
+				doProcess(resq, "정상적으로 삭제되었습니다");
 			}else{
 				System.out.println("입력값이 올바르지 않습니다");
 				doProcess(resq,"입력값이 올바르지 않습니다");
@@ -50,7 +52,7 @@ private static final long serialVersionUID = 1L;
 			hm.put("writer", writer);
 			if(bs.insertBoard(hm)){
 				System.out.println("정상적으로 입력되었습니다");
-				doProcess(resq, "정상적으로 입력되었습니다*");
+				doProcess(resq, "정상적으로 입력되었습니다");
 			}else{
 				System.out.println("입력값이 올바르지 않습니다");
 				doProcess(resq,"입력값이 올바르지 않습니다");
@@ -68,26 +70,56 @@ private static final long serialVersionUID = 1L;
 			hm.put("title", title);
 			hm.put("content", content);
 			hm.put("writer", writer);
-			if(bs.insertBoard(hm)){
+			if(bs.updateBoard(hm)){
 				System.out.println("정상적으로 수정되었습니다");
 				doProcess(resq, "정상적으로 수정되었습니다*");
 			}else{
 				System.out.println("입력값이 올바르지 않습니다");
 				doProcess(resq,"입력값이 올바르지 않습니다");
 			}
-		}else if(command.equals("SELECT"));
-			hm = new HashMap();
-			String bNum=req.getParameter("board_num");
-			System.out.println(bNum);
-			hm.put("bNum", bNum);
-			if(bs.insertBoard(hm)){
-				System.out.println("정상적으로 출력되었습니다");
-				doProcess(resq, "정상적으로 출력되었습니다*");
-			}else{
-				System.out.println("입력값이 올바르지 않습니다");
-				doProcess(resq,"입력값이 올바르지 않습니다");
+		}else if(command.equals("SELECT")){
+			String s_name = req.getParameter("s_name");
+		    System.out.println("이름 : "+ s_name);
+		    HashMap hm1 = new HashMap();
+		    if(name != null && !s_name.equals("")){
+		    	hm1.put("name", "%"+s_name+"%");
+		    }
+		    List<Map> boardList = bs.selectBoard(hm1);
+		    String result="<script>";
+		    
+		    result += "function deleteUser(bNum){";
+		    result += "location.href='delete.board?command=DELETE&num=' + bNum;";
+			result += "}";
+			result += "</script>";
+			result += "<form action='/test_web/sign.user'>";
+			result += "이름 : <input type='text' name='name' id='name'/> <input type='submit' value='검색'/>";
+			result += "<input type='hidden' name='command' value='SELECT'/>";
+			result += "</form>";
+			result += "<table border='1'>";
+			result += "<tr>";
+			result += "<td>유저번호</td>";
+			result += "<td>유저아이디</td>";
+			result += "<td>유저비밀번호</td>";
+			result += "<td>유저이름</td>";
+			result += "<td>클래스번호</td>";
+			result += "<td>삭제버튼</td>";
+			result += "</tr>";
+			for (Map m1 : boardList) {
+				result += "<tr align='center'>";
+				result += "<td>" + m1.get("num") + "</td>";
+				result += "<td>" + m1.get("title") + "</td>";
+				result += "<td>" + m1.get("content") + "</td>";
+				result += "<td>" + m1.get("writer") + "</td>";
+				result += "<td>" + m1.get("reg_date") + "</td>";
+				result += "<td><input type='button' value='삭제' onclick='deleteUser(" + m1.get("num") + ")'/></td>";
+				result += "</tr>";
 			}
+			result += "</table>";
+			doProcess(resq, result);
+		}
+
 	}
+
 	public void doProcess(HttpServletResponse resq, String writeStr) throws IOException	{
 		resq.setContentType("text/html; charset = UTF-8");
 		PrintWriter out = resq.getWriter();
