@@ -1,14 +1,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<script>
+function getHttpXmlObj(){
+	if(window.XMLHttpRequest){
+  		return new XMLHttpRequest();
+ 	}else if(window.ActiveXObject){
+  		return new ActiveXObject("Microsoft.XMLHTTP");
+ 	}
+	alert("해당 브라우져가  Ajax를 지원하지 않습니다.");
+}
+function doDelete(){
+	var num = "usernum";
+	var length = "5";
+	var typeVali = "n";
+if(num.value.length>maxLength){
+				alert("제한길이를 넘었습니다. 확인해주세요");
+				elObj.value="";
+				elObj.focus();
+				return;
+}
+		if(typeVali=="n"){
+			if(isNaN(new Number(num.value))){
+				alert("숫자만 입력해주세요.");
+				elObj.value="";
+				elObj.focus();
+				return;
+			}
+		}
+		params += ids[i]+"="+ elObj.value +"&";
+	
+	var xhr = getHttpXmlObj();
+	var method = "get";
+	var url = "test.user";
+	var aSync = true;
+	xhr.onreadystatechange=function(){
+   		if (xhr.readyState==4 && xhr.status==200){
+   			var result = decodeURIComponent(xhr.responseText);
+   			alert(result);
+        }
+    }
+   	xhr.open(method, url+params, aSync);
+   	if(method=="post"){
+   		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+   	}
+   	xhr.send();
+}
+</script>
 <body>
-<form action="/test_web/sign.user">
-���� ���� ��ȣ : <input type="text" name="user_num" id="user_num"/></br>
-<input type="submit" value="����"/>
+지울 유저 번호 : <input type="text" name="usernum" id="usernum" maxlength="3"/></br>
+<input type="button" value="삭제" onclick = "dodelete()"/>
 <input type="hidden" name="command" id="command" value="DELETE"/>
-</form>
 </body>
 </html>

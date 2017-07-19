@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>로그인</title>
+</head>
+<script>
+
+function checkLogin(){
+	
+
+		var id = document.getElementById("userid");
+		var pwd = document.getElementById("userpwd");
+		var idStr = "userid,userpwd,command";
+		var lengthStr = "30,100,100";
+		var typeStr = "s,s,s"
+		var params = "?";
+		var ids = idStr.split(",");
+		var lengths = lengthStr.split(",");
+		var types = typeStr.split(",")
+		for (var i = 0; i < ids.length; i++) {
+			var maxLength = new Number(lengths[i]);
+			var typeVali = types[i];
+			var elObj = document.getElementById(ids[i]);
+			if (!isNaN(maxLength)) {
+				if (elObj.value.length > maxLength) {
+					alert("제한길이를 넘었습니다. 확인해주세요");
+					elObj.value = "";
+					elObj.focus();
+					return;
+				}
+			}
+
+			if (id.value == "") {
+				id.focus();
+				alert("아이디 써주");
+				return false;
+			}
+			if (pwd.value == "") {
+				alert("패스워드 써주");
+				pwd.focus();
+				return false;
+			}
+			return true;
+			params += ids[i] + "=" + elObj.value + "&";
+			
+		}
+		var xhr = getHttpXmlObj();
+		var method = "get";
+		var url = "test.user";
+		var aSync = true;
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				var result = decodeURIComponent(xhr.responseText);
+				alert(result);
+			}
+		}
+		xhr.open(method, url + params, aSync);
+		if (method == "post") {
+			xhr.setRequestHeader("Content-type",
+					"application/x-www-form-urlencoded");
+		}
+		xhr.send();
+		document.getElement("paramas");
+	}
+</script>
+<body src="/js/Ajax.js">
+	아이디:
+	<input type="text" name="userid" id="userid" /> 비밀번호:
+	<input type="password" name=userpwd id="userpwd" />
+	<input type="button" value="로그인" onclick="checkLogin()" />
+</body>
+</html>

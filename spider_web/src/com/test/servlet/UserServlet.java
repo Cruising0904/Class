@@ -3,6 +3,8 @@ package com.test.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,11 +19,22 @@ public class UserServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resq) throws IOException, ServletException{		
 		req.setCharacterEncoding("UTF-8");
+		// request도 map을 가지고 있으며
+		// keyset의 iterator를 사용하여 while문(반복문)을 돌리게 되면
+		// 키값과 밸류값을 자동으로 받아 올 수 있다.
 		
-		String name1 = req.getParameter("name");
-		String pwd1 = req.getParameter("pass");
-		System.out.println("input html에서 너님이 던진값 ->"+name1+pwd1);
-		//html 화면에서 던진 값을 각각 String 변수로 받기 시작
+		Map<String, String[]> reqMap = req.getParameterMap();
+		System.out.println(reqMap);
+		Iterator<String> it = reqMap.keySet().iterator();
+		while(it.hasNext()){
+			String key = it.next();
+			System.out.println(key + "," + reqMap.get(key)[0]);
+		}
+		
+//		String name1 = req.getParameter("name");
+//		String pwd1 = req.getParameter("pass");
+//		System.out.println("input html에서 너님이 던진값 ->"+name1+pwd1);
+//		//html 화면에서 던진 값을 각각 String 변수로 받기 시작
 		String command = req.getParameter("command");
 		if(command==null){
 			return;
@@ -33,26 +46,32 @@ public class UserServlet extends HttpServlet {
 		
 		
 		if(command.equals("SIGNIN")){
-			String id = req.getParameter("id");
-			String pwd = req.getParameter("pwd");
-			String name = req.getParameter("name");
-			String class_num = req.getParameter("class_num");
+			String userid = req.getParameter("userid");
+			String userpwd = req.getParameter("userpwd");
+			String username = req.getParameter("username");
+			String address = req.getParameter("address");
+			String hp1 = req.getParameter("hp1");
+			String hp2 = req.getParameter("hp2");
+			String hp3 = req.getParameter("hp3");
 			String age = req.getParameter("age");
 		//위에서 받은 String 변수를 출력해줌(Tomcat 콘솔창에)
-		System.out.println(id + "," + pwd + "," + name + "," + class_num + ", " + age);
+		System.out.println(userid + "," + userpwd + "," + username + "," + address + ", " +hp1+ ", "+hp2+ ", " +hp3+", " +age);
 		
 		//해쉬맵 생성
 		hm = new HashMap();
 		//html 화면에서 던진 id값을 "id"라는 키로 해쉬맵에 저장
-		hm.put("id", id);
+		hm.put("userid", userid);
 		//html 화면에서 던진 pwd값을 "pwd"라는 키로 해쉬맵에 저장
-		hm.put("pwd", pwd);
+		hm.put("userpwd", userpwd);
 		//html 화면에서 던진 name값을 "name"라는 키로 해쉬맵에 저장
-		hm.put("name", name);
+		hm.put("username", username);
 		//html 화면에서 던진 class_num값을 "class_num"라는 키로 해쉬맵에 저장
-		hm.put("class_num", class_num);
-		//html 화면에서 던진 age값을 "age"라는 키로 해쉬맵에 저장
+		hm.put("address", address);
 		hm.put("age", age);
+		hm.put("hp1", hp1);
+		hm.put("hp2", hp2);
+		hm.put("hp3", hp3);
+		//html 화면에서 던진 age값을 "age"라는 키로 해쉬맵에 저장
 		
 		
 		//위에서 생성한 us레퍼런스 변수를 사용해 insertUser함수를 호출하는데 파라메터값은
@@ -68,9 +87,9 @@ public class UserServlet extends HttpServlet {
 		
 	
 		hm = new HashMap();
-		String user_num = req.getParameter("user_num");
-		System.out.println("삭제할 번호 : " + user_num);
-		hm.put("user_num", user_num);
+		String usernum = req.getParameter("usernum");
+		System.out.println("삭제할 번호 : " + usernum);
+		hm.put("usernum", usernum);
 		if(us.deleteUser(hm)){
 			System.out.println("삭제되었군");
 			doProcess(resq, "삭제되었군");
@@ -82,15 +101,21 @@ public class UserServlet extends HttpServlet {
 		
 	
 		hm = new HashMap();
-		String user_num = req.getParameter("user_num");
+		String usernum = req.getParameter("usernum");
 		String name = req.getParameter("name");
-		String class_num = req.getParameter("class_num");
+		String address = req.getParameter("address");
 		String age = req.getParameter("age");
-		System.out.println(user_num + "," + name + "," + class_num + "," +  age);
-		hm.put("user_num", user_num);
+		String hp1 = req.getParameter("hp1");
+		String hp2 = req.getParameter("hp2");
+		String hp3 = req.getParameter("hp3");
+		System.out.println(usernum + "," + name + "," + address + "," +  age+ "-" +hp1+ "-" +hp2+ "-" +hp3);
+		hm.put("usernum", usernum);
 		hm.put("name", name);
-		hm.put("class_num", class_num);
+		hm.put("address", address);
 		hm.put("age", age);
+		hm.put("hp1", hp1);
+		hm.put("hp2", hp2);
+		hm.put("hp3", hp3);
 		if(us.updateUser(hm)){
 			System.out.println("수정되었군");
 			doProcess(resq, "수정되었군");

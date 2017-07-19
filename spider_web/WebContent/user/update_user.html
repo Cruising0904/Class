@@ -6,20 +6,26 @@
 </head>
 <body>
 <form action="/test_web/sign.user">
-수정할 유저 번호 : <input type="text" name="user_num" id="user_num"/></br>
+수정할 유저 번호 : <input type="text" name="usernum" id="usernum"/></br>
 <table>
 
 <tr>
-	<td>name</td>
+	<td>이름</td>
 	<td><input type="text" name="name" id="name"/></td>
 </tr>
 <tr>
-	<td>class num</td>
-	<td><input type="text" name="class_num" id="class_num"/></td>
+	<td>주소</td>
+	<td><input type="text" name="address" id="address"/></td>
 </tr>
 <tr>
-	<td>age</td>
+	<td>나이</td>
 	<td><input type="text" name="age" id="age"/></td>
+</tr>
+<tr>
+	<td>핸드폰번호</td>
+	<td><input type="text" name="hp1" id="hp1" size="4" maxlength="3"/>
+	-<input type="text" name="hp2" id="hp2" size="4" maxlength="4"/>
+	-<input type="text" name="hp3" id="hp3" size="4" maxlength="4"/></td>
 </tr>
 </table>
 <input type="submit" value="수정"/>
