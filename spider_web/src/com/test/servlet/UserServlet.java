@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -31,21 +32,29 @@ public class UserServlet extends HttpServlet {
 			System.out.println(key + "," + reqMap.get(key)[0]);
 		}
 		
+		
+		
 //		String name1 = req.getParameter("name");
 //		String pwd1 = req.getParameter("pass");
 //		System.out.println("input html에서 너님이 던진값 ->"+name1+pwd1);
 //		//html 화면에서 던진 값을 각각 String 변수로 받기 시작
 		String command = req.getParameter("command");
+		HashMap hm;
 		if(command==null){
 			return;
 		}
-		UserService us = new UserService();
 		//UserService에 있는 insertUser(HashMap hm)이라는 함수를 호출하기 위해
 		//UserService로 us 레퍼런스 변수를 생성
-		HashMap hm;
-		
-		
-		if(command.equals("SIGNIN")){
+		UserService us = new UserService();
+		if (command.equals("LOGIN")){
+			String userId = req.getParameter("userid");
+			String userPwd = req.getParameter("userpwd");
+			hm = new HashMap();
+			hm.put("userid", userId);
+			hm.put("userpwd", userPwd );
+			String result = us.loginUser(hm);
+			doProcess(resq, result);
+		}else if(command.equals("SIGNIN")){
 			String userid = req.getParameter("userid");
 			String userpwd = req.getParameter("userpwd");
 			String username = req.getParameter("username");
@@ -77,10 +86,10 @@ public class UserServlet extends HttpServlet {
 		//위에서 생성한 us레퍼런스 변수를 사용해 insertUser함수를 호출하는데 파라메터값은
 		//위에서 생성하고 값을 저장한 HashMap인 hm 레퍼런스 변수를 같이 던짐.
 		if(us.insertUser(hm)){
-			System.out.println("저장 잘 되었군");
+//			System.out.println("저장 잘 되었군");
 			doProcess(resq, "저장 잘 되었군");
 		}else{
-			System.out.println("값 똑바로 입력하쇼");
+//			System.out.println("값 똑바로 입력하쇼");
 			doProcess(resq,"값 똑바로 입력하쇼");
 		}
 	}else if(command.equals("DELETE")){
@@ -117,36 +126,37 @@ public class UserServlet extends HttpServlet {
 		hm.put("hp2", hp2);
 		hm.put("hp3", hp3);
 		if(us.updateUser(hm)){
-			System.out.println("수정되었군");
+//			System.out.println("수정되었군");
 			doProcess(resq, "수정되었군");
 		}else{
-			System.out.println("값 똑바로 입력하쇼");
+//			System.out.println("값 똑바로 입력하쇼");
 			doProcess(resq,"값 똑바로 입력하쇼");
 		}
 		}else if(command.equals("SELECT")){
-			
-			
+			String name = req.getParameter("username");
+			System.out.println("이름 : " + name);
 			hm = new HashMap();
-			String user_name = req.getParameter("user_name");
-			System.out.println("불러올 이름"+user_name);
-			
-			hm.put("user_name", user_name);
-			if(us.updateUser(hm)){
-				System.out.println("성공적으로 불러왔습니다.");
-				doProcess(resq, "성공적으로 불러왔습니다.");
-			}else{
-				System.out.println("등록된 이름만 가능합니다.");
-				doProcess(resq,"등록된 이름만 가능합니다.");
+			if (name != null && !name.equals("")) {
+				hm.put("name", "%" + name + "%");
 			}
+			List<Map> userList  = us.selectUser(hm);
+			String result="번호{/}이름{/}아이디{/}나이{+}";
+			for(Map m : userList){
+				result += m.get("usernum") + "{/}" + m.get("username") + "{/}" + m.get("userid") + "{/}" + m.get("age") + "{+}"; 
 			}
+			result = result.substring(0, result.length()-3);
+			doProcess(resq, result);
 		}
+
+	}
+
 	public void dePost(HttpServletRequest req, HttpServletResponse reqs) throws IOException {
 
 	}
 
 	public void doProcess(HttpServletResponse resq, String writeStr) throws IOException {
 		resq.setContentType("text/html; charset = UTF-8");
-		PrintWriter out = resq.getWriter();
+		PrintWriter out = resq.getWriter(); // 웹에 그려주는것.
 		out.print(writeStr);
 
 	}
