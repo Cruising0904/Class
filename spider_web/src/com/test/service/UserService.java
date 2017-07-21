@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.test.common.DBConn2;
+import com.test.dto.UserInfo;
 
 public class UserService {
 	Connection con;
@@ -40,7 +41,7 @@ public class UserService {
 		}
 		return "그런 아이디 없음!";
 	}
-	public boolean insertUser(HashMap<String, String> hm) {
+	public boolean insertUser(UserInfo ui) {
 		con = null;
 		ps = null;
 		try {
@@ -49,14 +50,14 @@ public class UserService {
 			sql += "values(?,?,?,?,?,?,?,?)";
 
 			ps = con.prepareStatement(sql);
-			ps.setString(1, hm.get("userid"));
-			ps.setString(2, hm.get("userpwd"));
-			ps.setString(3, hm.get("username"));
-			ps.setString(4, hm.get("address"));
-			ps.setString(5, hm.get("hp1"));
-			ps.setString(6, hm.get("hp2"));
-			ps.setString(7, hm.get("hp3"));
-			ps.setString(8, hm.get("age"));
+			ps.setString(1, ui.getUserID());
+			ps.setString(2, ui.getUserPwd());
+			ps.setString(3, ui.getUserName());
+			ps.setString(4, ui.getAddress());
+			ps.setString(5, ui.getHp1());
+			ps.setString(6, ui.getHp2());
+			ps.setString(7, ui.getHp3());
+			ps.setInt(8, ui.getAge());
 			int result = ps.executeUpdate();
 			if (result == 1) {
 				con.commit();

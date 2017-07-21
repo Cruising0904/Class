@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.test.dto.UserInfo;
 import com.test.service.UserService;
 
 public class UserServlet extends HttpServlet {
@@ -64,6 +65,16 @@ public class UserServlet extends HttpServlet {
 			String hp3 = req.getParameter("hp3");
 			String age = req.getParameter("age");
 		//위에서 받은 String 변수를 출력해줌(Tomcat 콘솔창에)
+			UserInfo ui = new UserInfo();
+			ui.setUserId(userid);
+			ui.setUserPwd(userpwd);
+			ui.setUserName(username);
+			ui.setAddress(address);
+			ui.setHp1(hp1);
+			ui.setHp2(hp2);
+			ui.setHp3(hp3);
+			ui.setAge(Integer.parseInt(age));
+			
 		System.out.println(userid + "," + userpwd + "," + username + "," + address + ", " +hp1+ ", "+hp2+ ", " +hp3+", " +age);
 		
 		//해쉬맵 생성
@@ -85,7 +96,7 @@ public class UserServlet extends HttpServlet {
 		
 		//위에서 생성한 us레퍼런스 변수를 사용해 insertUser함수를 호출하는데 파라메터값은
 		//위에서 생성하고 값을 저장한 HashMap인 hm 레퍼런스 변수를 같이 던짐.
-		if(us.insertUser(hm)){
+		if(us.insertUser(ui)){
 //			System.out.println("저장 잘 되었군");
 			doProcess(resq, "저장 잘 되었군");
 		}else{
