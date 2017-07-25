@@ -13,7 +13,7 @@ public class UserInfo {
 	public int getUserNum(){
 	return userNum;
 	}
-	public String getUserID(){
+	public String getUserId(){
 		return userId;
 	}
 	public String getUserName(){

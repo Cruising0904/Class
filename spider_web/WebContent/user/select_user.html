@@ -7,18 +7,65 @@
 <script src = "/js/js.js"></script>
 <script>
 
-
+var AjaxUtil = function(params){
+	this.params = params;
+	
+}
+function getHttpXmlObj(){
+	if(window.XMLHttpRequest){
+  		return new XMLHttpRequest();
+ 	}else if(window.ActiveXObject){
+  		return new ActiveXObject("Microsoft.XMLHTTP");
+ 	}
+	alert("해당 브라우져가  Ajax를 지원하지 않습니다.");
+}
+function doUpdate(userNum){
+	var userName = document.getElementById("r"+ userNum + 1).value;
+	var userId = document.getElementById("r"+ userNum + 2).value;
+	var age = document.getElementById("r"+ userNum + 3).value;
+	var command = "UPDATE"
+	params = "?usernum=" + userNum + "&username=" + userName + "&userid=" + userId + "&age=" + age + "&command=" + command;
+	
+	var xhr = getHttpXmlObj();
+	var method = "get";
+	var url = "test.user";
+	var aSync = true;
+	xhr.onreadystatechange=function(){
+   		if (xhr.readyState==4){
+   			if(xhr.status==200){
+	   			var result = decodeURIComponent(xhr.responseText);
+	   			alert(result);
+	   			doSelect();
+   			}
+   		}
+	}
+   	xhr.open(method, url+params, aSync);
+   	xhr.send();
+}
 function doDelete(userNum){
 	var isDelete = confirm(userNum + "을 삭제할라고요~?");
 	alert(isDelete);
-}
-function doUpdate(userNum){
-	var isUpdate = confirm(userNum + "을 수정할라고요~?");
-	alert(isUpdate);
+	var command = "DELETE"
+		params = "?usernum=" + userNum + "&command=" + command;
+		var xhr = getHttpXmlObj();
+		var method = "get";
+		var url = "test.user";
+		var aSync = true;
+		xhr.onreadystatechange=function(){
+	   		if (xhr.readyState==4){
+	   			if(xhr.status==200){
+		   			var result = decodeURIComponent(xhr.responseText);
+		   			alert(result);
+		   			doSelect();
+	   			}
+	   		}
+		}
+	   	xhr.open(method, url+params, aSync);
+	   	xhr.send();
 }
 function doSelect(){
 	var idStr = "username,command";
-	var lengthStr = "100,100";
+	var lengthStr = "30,100";
 	var typeStr = "s,s"
 	var params="?";
 	var ids = idStr.split(",");
@@ -72,7 +119,7 @@ function doSelect(){
 	   						tableStr += "<td>" + columns[j] + "</td>";
 	   					}else{
 	   						if(tdEnables[j]=="en"){
-	   							tableStr += "<td><input type='text' value='" + columns[j] + "'/></td>";
+	   							tableStr += "<td><input type='text' value='" + columns[j] + "' id='r" + userNum + j + "'/></td>";
 	   						}else{
 		   						tableStr += "<td>" + columns[j] + "</td>";
 	   						}
@@ -83,7 +130,7 @@ function doSelect(){
    						tableStr += "<td>수정</td>";
    					}else{
    						tableStr += "<td><input type='button' value='삭제' onclick='doDelete(" + userNum + ")'/></td>";
-   						tableStr += "<td><input type='button' value='수정' onclick='doDelete(" + userNum + ")'/></td>";
+   						tableStr += "<td><input type='button' value='수정' onclick='doUpdate(" + userNum + ")'/></td>";
    					}
 	   				tableStr += "</tr>";
 	   			}
@@ -91,19 +138,18 @@ function doSelect(){
 	   				tableStr += "<tr><td colspan='3'>니가 검색한거 없어 임마</td></tr>";
 	   			}
 	   			tableStr+="</table>";
-	   			document.getElementById("bd_div").innerHTML += tableStr;
+	   			document.getElementById("bd_div").innerHTML = tableStr;
    			}else{
-   				document.getElementById("bd_div").innerHTML += xhr.responseText;
+   				document.getElementById("bd_div").innerHTML = xhr.responseText;
    			}
         }
     }
    	xhr.open(method, url+params, aSync);
    	if(method=="post"){
-   		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+   		xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
    	}
    	xhr.send();
 }
- 
 </script>
 <body>
 이름 : <input type="text" name="username" id="username"/> <input type="button" value="검색" onclick = "doSelect()"/>

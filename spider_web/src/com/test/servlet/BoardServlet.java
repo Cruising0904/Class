@@ -22,14 +22,16 @@ private static final long serialVersionUID = 1L;
 		String name = req.getParameter("name");
 		String command = req.getParameter("command");
 		BoardService bs = new BoardService();
-		HashMap hm;
-		
+		 int biNum;
+		 String biTtitle = req.getParameter("biTtitle");
+		 String biContent= req.getParameter("biContent");
+		 String biPwd= req.getParameter("biPwd");
+		 String creUsr= req.getParameter("creUsr");
 		if(command==null){
 			return;
 		}
 		
 		if(command.equals("DELETE")){
-			hm = new HashMap();
 			String dNum = req.getParameter("d_num");
 			System.out.println("삭제할 번호 :" + dNum);
 			hm.put("d_num", dNum);
@@ -42,14 +44,10 @@ private static final long serialVersionUID = 1L;
 			}
 			
 		}else if(command.equals("INSERT")){
-			hm = new HashMap();
 			String title = req.getParameter("title"); 
 			String content = req.getParameter("content"); 
 			String writer = req.getParameter("writer"); 
 			System.out.println(title+" "+content+" "+ writer);
-			hm.put("title", title);
-			hm.put("content", content);
-			hm.put("writer", writer);
 			if(bs.insertBoard(hm)){
 				System.out.println("정상적으로 입력되었습니다");
 				doProcess(resq, "정상적으로 입력되었습니다");
@@ -60,16 +58,6 @@ private static final long serialVersionUID = 1L;
 			
 			
 		}else if(command.equals("UPDATE")){
-			hm = new HashMap();
-			String bNum=req.getParameter("board_num");
-			String title=req.getParameter("title");
-			String content=req.getParameter("content");
-			String writer=req.getParameter("writer");
-			System.out.println(bNum+" "+title+" "+content+" "+writer);
-			hm.put("board_num", bNum);
-			hm.put("title", title);
-			hm.put("content", content);
-			hm.put("writer", writer);
 			if(bs.updateBoard(hm)){
 				System.out.println("정상적으로 수정되었습니다");
 				doProcess(resq, "정상적으로 수정되었습니다*");
