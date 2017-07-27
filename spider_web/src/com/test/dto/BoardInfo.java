@@ -2,7 +2,7 @@ package com.test.dto;
 
 public class BoardInfo {
 private int biNum;
-private String biTtitle;
+private String biTitle;
 private String biContent;
 private String biPwd;
 private String creUsr;
@@ -12,11 +12,11 @@ public int getBiNum() {
 public void setBiNum(int biNum) {
 	this.biNum = biNum;
 }
-public String getBiTtitle() {
-	return biTtitle;
+public String getBiTitle() {
+	return biTitle;
 }
 public void setBiTtitle(String biTtitle) {
-	this.biTtitle = biTtitle;
+	this.biTitle = biTtitle;
 }
 public String getBiContent() {
 	return biContent;

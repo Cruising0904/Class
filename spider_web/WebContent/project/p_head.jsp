@@ -6,13 +6,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>게시판하기</title>
 </head>
-<%!
-public void printStr(String str){
-	System.out.println("adsfsfad");
-}
-%>
+
+
 <%
 
 String userId = (String) session.getAttribute("userid");
@@ -23,7 +20,8 @@ String hp1 =  "";
 String hp2 =  "";
 String hp3 =  "";
 
-
+int a = 1;
+System.out.println(a);
 boolean login = false;
 if(userId!=null){
 	userName =  (String) session.getAttribute("username");
@@ -40,20 +38,54 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 String toDateStr = sdf.format(toDate); 
 String init = request.getParameter("init");
 String defaultUrl = "";
+
+if(login){
+	out.println("현재시간 : " + toDateStr);
+	out.println("<br/>");
+	out.println(userId + "님 환영해요~");
+	out.println("<br/>");
+	out.println("==" + userId + "님 의 정보 ==");
+	out.println("<br/>");
+	out.println("성명 : " + userName);
+	out.println("나이 : " + age);
+	out.println("<br/>");
+	out.println("주소 : " + address);
+	out.println("<br/>"); 
+	out.println("전화번호 : " + hp1 + hp2 + hp3);
+	out.println("<br/>"); 
+	out.println("<input type='button' value='로그아웃' onclick='doLogout()'/>");
+	out.println("<input type='button' value='메인이동' onclick='doMovePage(\"main\")'/>");
+	out.println("<input type='button' value='게시판이동' onclick='doMovePage(\"board\")'/>");
+	out.println("<p/>");
+	out.println("<br/>");
+}
 if(init ==null && !login){
-	defaultUrl = rootPath +"/user/login.jsp?init=1";
+	defaultUrl = rootPath +"/project/p_login.jsp?init=1";
 	response.sendRedirect(defaultUrl);
 }
+	 
 %>
 <script src="<%=rootPath%>/js/jquery-3.2.1.js"></script>
 <script>
-var rootPath = "<%=rootPath%>";
+function doLogout(){
+	location.href=rootPath + "/project/p_loginok.jsp";
+}
+var rootPath ="<%=rootPath%>";
 
 function doMovePage(pageId){
 	var url = "";
 	if(pageId=="board"){
-		url = rootPath + "/board/board_select.jsp";
+		url = rootPath + "/project/board_select.jsp";
+	}else if(pageId=="main"){
+		url = rootPath + "/project/p_main.jsp";
+	}else if(pageId=="insert"){
+		url = rootPath + "/project/p_insert.jsp";
+	}else if(pageId=="select"){
+		url = rootPath + "/project/p_select.jsp";
 	}
 	location.href=url;
 }
+
+
+
 </script>

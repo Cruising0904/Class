@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
-<%@ page import="com.test.common.DBConn" %>
+<%@ page import="com.test.common.DBConn2" %>
 <%@ page import="com.test.dto.BoardInfo" %>
 <body>
 <!-- 
@@ -16,7 +16,7 @@
 	Connection con = null;
 	PreparedStatement ps = null;
 	try{
-		con = DBConn.getCon();
+		con = DBConn2.getCon();
 		String sql = "select binum, bititle, bicontent, bipwd, creusr, credat from board_info";
 		ps = con.prepareStatement(sql);
 		ResultSet rs = ps.executeQuery();
