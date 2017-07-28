@@ -2,11 +2,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
-<%@ page import="com.test.common.DBConn" %>
+<%@ page import="com.test.common.DBConn2" %>
 <%@ page import="com.test.dto.BoardInfo" %>
 <body>
 <%
 	int pBinum = Integer.parseInt(request.getParameter("binum"));
+	String pBiPwd = request.getParameter("bipwd");
 	Connection con = null;
 	PreparedStatement ps = null;
 	int binum = 0;
@@ -16,7 +17,7 @@
 	String creusr = "";
 	String credat = "";
 	try{
-		con = DBConn.getCon();
+		con = DBConn2.getCon();
 		String sql = "select binum, bititle, bicontent, bipwd, creusr, credat from board_info where binum=?";
 		ps = con.prepareStatement(sql);
 		ps.setInt(1,pBinum);
@@ -38,6 +39,25 @@
 			bicontent = rs.getString("bicontent");
 			creusr = rs.getString("creusr");
 			credat = rs.getString("credat");
+			bipwd = rs.getString("bipwd");
+			if(!bipwd.equals(pBiPwd)){
+				out.println("<script>");
+				out.println("alert(" +pBinum + ");" );
+				//out.println("history.back();" );
+				out.println("</script>");
+				out.println("< % JSP태그다 이자식아!! % >");
+			}else{
+%>
+<form method="get" action="<%=rootPath%>/board/board_modify_ok.jsp" >
+제목 : <input type="text" name="bititle" id="bititle" value="<%=bititle%>"/><br/>
+내용 : <textarea name="bicontent" id="bicontent"><%=bicontent%></textarea><br/>
+글쓴이 : <input type="text" name="creusr" id="creusr" value="<%=creusr%>"/><br/>
+비밀번호 : <input type="password" name="bipwd" id="bipwd" value="<%=bipwd%>"/><br/>
+<input type="hidden" value="<%=binum%>" name="binum"/>
+<input type="submit" value="수정하기"/>
+</form>
+<%
+			}
 		}
 	}catch(Exception e){
 		System.out.println(e);
@@ -46,26 +66,11 @@
 			ps.close();
 			ps = null;
 		}
-		DBConn.closeCon();
+		DBConn2.closeCon();
 	}
-%>
 
-번호 : <%=binum%><br/>
-제목 : <%=bititle%><br/>
-내용 : <%=bicontent%><br/>
-글쓴이 : <%=creusr%><br/>
-생성일자 :  <%=credat%><br/>
-비밀번호 : <input type="password" name="bipwd" id="bipwd" /><br/>
-<input type="button" value="수정" onclick="modifyBoard()"/> <input type="button" value="삭제"onclick="deleteBoard()"/>
-<script>
-function modifyBoard(){
-	var bipwd = document.getElementById("bipwd").value;
-	location.href="<%=rootPath%>/board/board_modify.jsp?binum=<%=binum%>&bipwd=" + bipwd;
-}
-function deleteBoard(){
-	var bipwd = document.getElementById("bipwd").value;
-	location.href="<%=rootPath%>/board/board_delete.jsp?binum=<%=binum%>&bipwd=" + bipwd; 
-}
-</script>
+%>
+<body>
+
 </body>
 </html>

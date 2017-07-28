@@ -8,7 +8,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>게시판하기</title>
 </head>
-
+<script>
+    window.onload = function() {
+      setInterval(function() {
+        var target = document.getElementsByName("dt_now")[0];
+        target.value = new Date();
+      }, 1000);
+    }
+</script>
+<input type="text" size="43" name="dt_now" value="00"/><br/>
 
 <%
 
@@ -40,7 +48,7 @@ String init = request.getParameter("init");
 String defaultUrl = "";
 
 if(login){
-	out.println("현재시간 : " + toDateStr);
+	out.println("접속시간 : " + toDateStr);
 	out.println("<br/>");
 	out.println(userId + "님 환영해요~");
 	out.println("<br/>");

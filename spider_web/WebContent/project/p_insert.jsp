@@ -3,27 +3,32 @@
     pageEncoding="UTF-8"%>
  <script>
  function docheck(){
-	 var title = document.getElementById("bititle");
-	 var pwd = document.getElementById("bipwd");
-	 var content = document.getElementById("bicontent");
- 	 var url = "rootPath+/project/p_insertok.jsp?";
-	 if(title.value.trim()==""){
+	 var titleObj = document.getElementById("bititle");
+	 var title = titleObj.value;
+	 var pwdObj = document.getElementById("bipwd");
+	 var pwd = pwdObj.value;
+	 var contentObj = document.getElementById("bicontent");
+	 var content = contentObj.value;
+	 if(titleObj.value.trim()==""){
 		 alert("제목은 입력 되어야합니다");
 		bititle.focus(); 
 		
-	 }else if(pwd.value.trim()==""){
+	 }else if(pwdObj.value.trim()==""){
 	 alert("비밀번호가 입력 되어야합니다");
 		bipwd.focus(); 
 		
-	 }else if(content.value.trim()==""){
+	 }else if(contentObj.value.trim()==""){
 		 if(confirm("내용없이 작성을 진행하겠습니까?")==true){
-			 
+			 doSend();
 		 }else{
 			 alert("그럼 빨리 내용 입력해!!")
 			 return;
 		 }
  }else{
-	 location.href=url+"bititle=title&bipwd=pwd&bicontent=content";
+	 doSend();
+ }
+ function doSend(){
+	 location.href="p_insertok.jsp?"+"bititle"+"="+title+"&"+"bipwd"+"="+pwd+"&"+"bicontent"+"="+content;
  }
  }
  </script>

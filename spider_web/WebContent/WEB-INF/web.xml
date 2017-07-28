@@ -25,6 +25,21 @@
     <servlet-name>CalServlet</servlet-name>
     <servlet-class>com.test.servlet.CalServlet</servlet-class>
   </servlet>
+  <filter>
+  	<filter-name>Set Character Encoding</filter-name>
+  	<filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
+  	<init-param>
+  		<param-name>encoding</param-name>
+  		<param-value>utf-8</param-value>
+  	</init-param>
+  </filter>
+  
+  <filter-mapping>
+  	<filter-name>Set Character Encoding</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  
   <servlet-mapping>
     <servlet-name>CalServlet</servlet-name>
     <url-pattern>*.cal</url-pattern>

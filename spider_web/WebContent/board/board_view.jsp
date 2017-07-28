@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
-<%@ page import="com.test.common.DBConn" %>
+<%@ page import="com.test.common.DBConn2" %>
 <%@ page import="com.test.dto.BoardInfo" %>
 <body>
 <%
@@ -16,7 +16,7 @@
 	String creusr = "";
 	String credat = "";
 	try{
-		con = DBConn.getCon();
+		con = DBConn2.getCon();
 		String sql = "select binum, bititle, bicontent, bipwd, creusr, credat from board_info where binum=?";
 		ps = con.prepareStatement(sql);
 		ps.setInt(1,pBinum);
@@ -46,17 +46,42 @@
 			ps.close();
 			ps = null;
 		}
-		DBConn.closeCon();
+		DBConn2.closeCon();
 	}
 %>
+<jsp:include page="/common/top.jsp" flush="fasle"></jsp:include>
+ <div class="container">
+      <div class="starter-template">
+      <table border="1" class="table table-bordered table-hover">
+      <tr>
+      <td>번호</td>
+      <td><%=binum%></td>
+      </tr>
+      <tr>
+      <td>제목</td>
+      <td><%=bititle%></td>
+      </tr>
+      <tr>
+      <td>내용</td>
+      <td><%=bicontent%></td>
+      </tr>
+      <tr>
+      <td>글쓴이</td>
+      <td><%=creusr%></td>
+      </tr>
+      <tr>
+      <td>생성일자</td>
+      <td><%=credat%></td>
+      </tr>
+      <tr>
+      <td>비밀번호</td>
+      <td><input type="password" name="bipwd" id="bipwd" /></td>
+      </tr>
 
-번호 : <%=binum%><br/>
-제목 : <%=bititle%><br/>
-내용 : <%=bicontent%><br/>
-글쓴이 : <%=creusr%><br/>
-생성일자 :  <%=credat%><br/>
-비밀번호 : <input type="password" name="bipwd" id="bipwd" /><br/>
+</table>
 <input type="button" value="수정" onclick="modifyBoard()"/> <input type="button" value="삭제"onclick="deleteBoard()"/>
+</div>
+</div>
 <script>
 function modifyBoard(){
 	var bipwd = document.getElementById("bipwd").value;
