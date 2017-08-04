@@ -7,7 +7,9 @@
 
 <% 
 Gson g = new Gson();
-
+HashMap<String, String> hm = g.fromJson(request.getReader(),HashMap.class);
+String op = hm.get("op");
+String cp = hm.get("cp");
 Connection con;
 PreparedStatement ps=null;
 ArrayList<Map<String, String>> vendList = new ArrayList<Map<String,String>>();

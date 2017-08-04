@@ -26,11 +26,40 @@
 <input type="button" id="getInfo" value="검색" />
 <div id="result_div" class="container"></div>
 <script>
+$(document).ready(function(){
+	var a = { 
+    		type     : "POST"
+	    ,   url      : "/car/vendor_ok.jsp"
+	    ,   dataType : "json" 
+	    ,   beforeSend: function(xhr) {
+	        xhr.setRequestHeader("Accept", "application/json");
+	        xhr.setRequestHeader("Content-Type", "application/json");
+	    }
+	    ,   data     : null
+	    ,   success : function(result){
+    	        $('#table').bootstrapTable({
+    	            data: result
+    	        });
+    	        alert(result)
+    	            alert("성공");
+	    }
+	    ,   error : function(xhr, status, e) {
+		    	alert("에러 : "+e);
+		},
+		complete  : function() {
+// 			alert("실패던지 성공이던지 나랑 무슨상관이냐~ 난 실행할란다~");
+		}
+	};
+$.ajax(a);
+}); 
 
 $("#getInfo").click(function(){
+var op = $(s_vendor).val();
+// 	return;
 	var cp = $("#cp").val();
 	var param = {};
 	param["cp"] = cp;
+	param["op"] = op
 	param = JSON.stringify(param);
 	var a = { 
 	        		type     : "POST"
@@ -40,7 +69,7 @@ $("#getInfo").click(function(){
 	    	        xhr.setRequestHeader("Accept", "application/json");
 	    	        xhr.setRequestHeader("Content-Type", "application/json");
 	    	    }
-	    	    ,   data     : null
+	    	    ,   data     : param
 	    	    ,   success : function(result){
 		    	        $('#table').bootstrapTable({
 		    	            data: result
@@ -50,12 +79,14 @@ $("#getInfo").click(function(){
 	    		    	alert("에러 : "+e);
 	    		},
 	    		complete  : function() {
-	    			alert("실패던지 성공이던지 나랑 무슨상관이냐~ 난 실행할란다~");
+// 	    			alert("실패던지 성공이던지 나랑 무슨상관이냐~ 난 실행할란다~");
 	    		}
 	    	};
 	$.ajax(a);
 }); 
 $(document).ready(function(){
+// 	$(s_vendor).val();
+	
 
 	var a = { 
 	        type     : "POST"
@@ -70,8 +101,8 @@ $(document).ready(function(){
 	    	    	for(var i =0, max =result.length;i<max;i++){
 	    	    		var results= result[i];
 	    	    		$("#s_vendor").append("<option value='"+results.vinum+"'>"+results.viname+"</option>");
-	    	    		alert(results.vinum);
-	    	    		alert(results.viname);
+// 	    	    		alert(results.vinum);
+// 	    	    		alert(results.viname);
 	    	    		
 	    	    	}
 	    	    	alert("성공");
