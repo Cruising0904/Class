@@ -4,8 +4,8 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="com.test.common.DBConn2" %>
 <%@ page import="com.test.dto.BoardInfo" %>
+<%@ include file="/common/bottom.jsp"%>
 <body>
-<jsp:include page="/common/top.jsp" flush="fasle"></jsp:include>
 <script>
 function goBoard(biNum,param2){
 	location.href ="<%=rootPath%>/board/board_view.jsp?binum=" + biNum;
@@ -50,7 +50,6 @@ function doSearch(){
 		tableStr += "<tr align='center'>";
 		tableStr += "<th>번호</th>";
 		tableStr += "<th>제목</th>";
-		tableStr += "<th>비밀번호</th>";
 		tableStr += "<th>작성자</th>";
 		tableStr += "<th>작성일자</th>";
 		tableStr += "</tr>";
@@ -60,7 +59,6 @@ function doSearch(){
 			tableStr += "<tr>";
 			tableStr += "<td>"+rs.getInt("binum") + "</td>";
 			tableStr += "<td><a href='#javascript' onclick='goBoard(" + rs.getInt("binum") + ")'>"+rs.getString("bititle") + "</a></td>";
-			tableStr += "<td>"+rs.getString("bipwd") + "</td>";
 			tableStr += "<td>"+rs.getString("creusr") + "</td>";
 			tableStr += "<td>"+rs.getString("credat") + "</td>";
 			tableStr += "</tr>";

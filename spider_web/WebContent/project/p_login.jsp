@@ -1,25 +1,33 @@
 <%@ include file="/project/p_head.jsp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
+    <link rel="stylesheet" href="<%=rootPath%>/ui/signin.css"/>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
+<jsp:include page="/main.jsp" flush="false">
+	<jsp:param name="login" value="<%=login%>"></jsp:param>
+</jsp:include>
+    <div class="container">
+      <form class="form-signin"  action="<%=rootPath%>/project/p_loginok.jsp">
+        <h2 class="form-signin-heading">
+        
+        Please sign in</h2>
+        <label for="inputID" class="sr-only">ID</label>
+        <input type="text" id="id" name="id" class="form-control" placeholder="ID" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password"  name="pwd" id="pwd" class="form-control" placeholder="Password" required>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      </form>
 
-<% 
-String table = "";
-if(!login){
-table += "<body>";
-table += "<form action ='/project/p_loginok.jsp'>";
-table += "ID :<input type='text' name ='id'/><br/>";
-table += "PWD :<input type='text' name ='pwd'/><br/>";
-table += "<input type='submit' value ='로그인'/>";
-table += "</body>";
-out.println(table);
-}
-%>
+    </div> <!-- /container -->
+
+
 
 </form> 
 </body>

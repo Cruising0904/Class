@@ -33,7 +33,7 @@ String toDateStr = sdf.format(toDate);
 String init = request.getParameter("init");
 String defaultUrl = "";
 if(init==null && !login){
-	defaultUrl = rootPath + "/user/login.jsp?init=2";
+	defaultUrl = rootPath + "/submit/login.jsp?init=2";
 	response.sendRedirect(defaultUrl);
 }
 
@@ -63,9 +63,7 @@ function doMovePage(pageId){
 	if(pageId=="board"){
 		url += "/board/board_select.jsp";
 	}else if(pageId=="main"){
-		url += "/main.jsp";
-	}else if(pageId=="insertBoard"){
-		url += "/board/board_insert.jsp";
+		url += "/submit/main.jsp";
 	}
 	location.href=url;
 }
@@ -80,11 +78,12 @@ function doMovePage(pageId){
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
+          <a class="navbar-brand" href="/main.jsp">HOME</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-          <li><a  href="/main.jsp">HOME</a></li>
-            <li><a href="/board/board_select.jsp">게시판가기</a></li>
+            <li><a href="/submit/board_select.jsp">게시판가기</a></li>
+            <li><a href="/submit/user_info.jsp">유저정보가기</a></li>
             <li><a href="/user/logout_ok.jsp"><%=loginStr %></a></li>
           </ul>
           
