@@ -10,12 +10,13 @@ import java.util.List;
 import java.util.Map;
 
 import com.test.common.DBConn2;
+import com.test.dto.BoardInfo;
 
 public class BoardService{
 	Connection con;
 	PreparedStatement ps;
 	String sql;
-	public boolean insertBoard(HashMap<String, String> hm){
+	public boolean insertBoard(BoardInfo bi){
 		con = null;
 		ps = null;
 		try {
@@ -45,7 +46,7 @@ public class BoardService{
 		}
 		return false;
 	}
-	public boolean deleteBoard(HashMap<String, String> hm){
+	public boolean deleteBoard(BoardInfo bi){
 		con = null;
 		ps = null;
 		try {

@@ -21,10 +21,7 @@
     <servlet-name>BoardServlet</servlet-name>
     <url-pattern>*.board</url-pattern>
   </servlet-mapping>
-   <servlet>
-    <servlet-name>CalServlet</servlet-name>
-    <servlet-class>com.test.servlet.CalServlet</servlet-class>
-  </servlet>
+  
   <filter>
   	<filter-name>Set Character Encoding</filter-name>
   	<filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
@@ -38,10 +35,12 @@
   	<filter-name>Set Character Encoding</filter-name>
   	<url-pattern>/*</url-pattern>
   </filter-mapping>
-  
-  
+   <servlet>
+    <servlet-name>GoodsServlet</servlet-name>
+    <servlet-class>com.test.servlet.GoodsServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
-    <servlet-name>CalServlet</servlet-name>
-    <url-pattern>*.cal</url-pattern>
+    <servlet-name>GoodsServlet</servlet-name>
+    <url-pattern>*.goods</url-pattern>
   </servlet-mapping>
 </web-app>

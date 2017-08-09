@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.test.dto.BoardInfo;
 import com.test.service.BoardService;
 
 public class BoardServlet extends HttpServlet{
@@ -19,9 +20,10 @@ private static final long serialVersionUID = 1L;
 	public void doGet(HttpServletRequest req,HttpServletResponse resq) throws IOException,ServletException{
 		req.setCharacterEncoding("UTF-8");
 		
+		BoardService bs = new BoardService();
+		BoardInfo bi = new BoardInfo();
 		String name = req.getParameter("name");
 		String command = req.getParameter("command");
-		BoardService bs = new BoardService();
 		 int biNum;
 		 String biTtitle = req.getParameter("biTtitle");
 		 String biContent= req.getParameter("biContent");
@@ -32,10 +34,10 @@ private static final long serialVersionUID = 1L;
 		}
 		
 		if(command.equals("DELETE")){
-			String dNum = req.getParameter("d_num");
+			int dNum = Integer.parseInt(req.getParameter("d_num"));
 			System.out.println("삭제할 번호 :" + dNum);
-			hm.put("d_num", dNum);
-			if(bs.deleteBoard(hm)){
+			bi.setdNum(dNum);
+			if(bs.deleteBoard()){
 				System.out.println("정상적으로 삭제되었습니다");
 				doProcess(resq, "정상적으로 삭제되었습니다");
 			}else{

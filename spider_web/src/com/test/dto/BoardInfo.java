@@ -6,6 +6,16 @@ private String biTitle;
 private String biContent;
 private String biPwd;
 private String creUsr;
+private int dNum;
+public int getdNum() {
+	return dNum;
+}
+public void setdNum(int dNum) {
+	this.dNum = dNum;
+}
+public void setBiTitle(String biTitle) {
+	this.biTitle = biTitle;
+}
 public int getBiNum() {
 	return biNum;
 }

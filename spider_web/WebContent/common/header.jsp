@@ -52,22 +52,78 @@ String version = "1.2"; // css에서 버전이 적용 안되는 경우가 있는
 <link rel="stylesheet" href="<%=rootPath%>/ui/btsp3.7.7/css/bootstrap-table.css?version=<%=version%>"/>
 <link rel="stylesheet" href="<%=rootPath%>/ui/common.css?version=<%=version%>"/>
 <script>
+
+Number.prototype.equals = function(obj){
+	if(obj instanceof Number){
+		return this.toString() == obj.toString();
+	}
+	return this==obj;  // 값 자체를 비교할수 있게 만들어줌.
+}
+function setPagination(sNum, eNum, nPage, nTotal, objId){
+	var pageStr = "";
+	if(nPage.equals(1)){
+		pageStr += "<li class='disabled'><a >◀◀</a></li>";
+		pageStr += "<li class='disabled' ><a >◀</a></li>";
+	}else{ 
+		pageStr += "<li><a>◀◀</a></li>";
+		pageStr += "<li><a>◀</a></li>";
+	}
+	for(var i=sNum, max=eNum;i<=max;i++){
+		if(i==nPage){
+			pageStr += "<li class='active'><a>" + i + "</a></li>";
+		}else{
+			pageStr += "<li><a>" + i + "</a></li>";
+		}
+	}
+	if(nPage.equals(nTotal)){
+		pageStr += "<li class='disabled'><a>▶</a></li>";
+		pageStr += "<li class='disabled'><a>▶▶</a></li>";
+	}else{ 
+		pageStr += "<li><a>▶</a></li>";
+		pageStr += "<li><a>▶▶</a></li>";
+	}
+
+	$("#" + objId).html(pageStr);
+}
+
 var rootPath = "<%=rootPath%>";
 $(document).ready(function(){
 	var nowUrl = "<%=nowUrl%>";
 	var obj = $("a[href='" + nowUrl + "']").parent().attr("class","active");
 })
-
 function doMovePage(pageId){
 	var url = "<%=rootPath%>";
 	if(pageId=="board"){
 		url += "/board/board_select.jsp";
 	}else if(pageId=="main"){
-		url += "/main.jsp";
+		url += "/";
 	}else if(pageId=="insertBoard"){
 		url += "/board/board_insert.jsp";
 	}
 	location.href=url;
+}
+
+function alertOp(){
+	alert($("#op").val());
+}
+function goPage(pParams, pUrl, pCallBackFunc){
+	var params = JSON.stringify(pParams);
+	$.ajax({ 
+    		type     : "POST"
+	    ,   url      : pUrl
+	    ,   dataType : "json" 
+	    ,   beforeSend: function(xhr) {
+	        xhr.setRequestHeader("Accept", "application/json");
+	        xhr.setRequestHeader("Content-Type", "application/json");
+	    }
+	    ,   data     : params
+	    ,   success : pCallBackFunc
+	    ,   error : function(xhr, status, e) {
+		    	alert("에러 : "+e);
+		},
+		complete  : function() {
+		}
+	});
 }
 </script>
 <body background= "http://www.ewallpapers.eu/sites/default/files/styles/2560x1600/public/681001411.jpg?itok=7kTB6Lqc"/>
