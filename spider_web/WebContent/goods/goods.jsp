@@ -35,6 +35,9 @@ var thisNowPage = 0;
 var thisTotalPage = 0;
 function callback(results){
 	var goodsList = results;
+	var pageInfo = results.page;
+	setPagination(pageInfo, "page");
+	setEvent(pageInfo);
     $('#table').bootstrapTable('destroy');
     $('#table').bootstrapTable({
         data: goodsList
