@@ -56,6 +56,6 @@ public class Goods {
 	@Override
 	public String toString() {
 		return "Goods [giNum=" + giNum + ", giName=" + giName + ", giDesc=" + giDesc + ", viNum=" + viNum + ", viName="
-				+ viName + ", command=" + command + "]";
+				+ viName + ", command=" + command + ", page=" + page + "]";
 	}
 }

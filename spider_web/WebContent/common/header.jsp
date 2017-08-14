@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 </head>
 <%
 String userId = (String) session.getAttribute("userid");
@@ -36,16 +37,17 @@ if(init==null && !login){
 	defaultUrl = rootPath + "/user/login.jsp?init=2";
 	response.sendRedirect(defaultUrl);
 }
-
 String nowUrl = request.getRequestURI();
 String loginStr = "로그인";
 if(login){
 	loginStr = "로그아웃";
 }
-String version = "1.2"; // css에서 버전이 적용 안되는 경우가 있는데 이렇게 써줌으로써  밑에 버전들과 맞춰진다.
+String version = "1.3.2";
 %>
 <script src="<%=rootPath%>/js/jquery-3.2.1.js?version=<%=version%>"></script>
+<script src="<%=rootPath%>/ui/common.js?version=<%=version%>"></script>
 <script src="<%=rootPath%>/ui/btsp3.7.7/js/bootstrap.min.js?version=<%=version%>"></script>
+<script src="<%=rootPath%>/ui/btsp3.7.7/js/bootstrap-table.js?version=<%=version%>"></script>
 <script src="<%=rootPath%>/ui/btsp3.7.7/js/bootstrap-table.js?version=<%=version%>"></script>
 <link rel="stylesheet" href="<%=rootPath%>/ui/btsp3.7.7/css/bootstrap-theme.min.css?version=<%=version%>"/>
 <link rel="stylesheet" href="<%=rootPath%>/ui/btsp3.7.7/css/bootstrap.min.css?version=<%=version%>"/>
@@ -53,38 +55,6 @@ String version = "1.2"; // css에서 버전이 적용 안되는 경우가 있는
 <link rel="stylesheet" href="<%=rootPath%>/ui/common.css?version=<%=version%>"/>
 <script>
 
-Number.prototype.equals = function(obj){
-	if(obj instanceof Number){
-		return this.toString() == obj.toString();
-	}
-	return this==obj;  // 값 자체를 비교할수 있게 만들어줌.
-}
-function setPagination(sNum, eNum, nPage, nTotal, objId){
-	var pageStr = "";
-	if(nPage.equals(1)){
-		pageStr += "<li class='disabled'><a >◀◀</a></li>";
-		pageStr += "<li class='disabled' ><a >◀</a></li>";
-	}else{ 
-		pageStr += "<li><a>◀◀</a></li>";
-		pageStr += "<li><a>◀</a></li>";
-	}
-	for(var i=sNum, max=eNum;i<=max;i++){
-		if(i==nPage){
-			pageStr += "<li class='active'><a>" + i + "</a></li>";
-		}else{
-			pageStr += "<li><a>" + i + "</a></li>";
-		}
-	}
-	if(nPage.equals(nTotal)){
-		pageStr += "<li class='disabled'><a>▶</a></li>";
-		pageStr += "<li class='disabled'><a>▶▶</a></li>";
-	}else{ 
-		pageStr += "<li><a>▶</a></li>";
-		pageStr += "<li><a>▶▶</a></li>";
-	}
-
-	$("#" + objId).html(pageStr);
-}
 
 var rootPath = "<%=rootPath%>";
 $(document).ready(function(){
@@ -106,27 +76,8 @@ function doMovePage(pageId){
 function alertOp(){
 	alert($("#op").val());
 }
-function goPage(pParams, pUrl, pCallBackFunc){
-	var params = JSON.stringify(pParams);
-	$.ajax({ 
-    		type     : "POST"
-	    ,   url      : pUrl
-	    ,   dataType : "json" 
-	    ,   beforeSend: function(xhr) {
-	        xhr.setRequestHeader("Accept", "application/json");
-	        xhr.setRequestHeader("Content-Type", "application/json");
-	    }
-	    ,   data     : params
-	    ,   success : pCallBackFunc
-	    ,   error : function(xhr, status, e) {
-		    	alert("에러 : "+e);
-		},
-		complete  : function() {
-		}
-	});
-}
 </script>
-<body background= "http://www.ewallpapers.eu/sites/default/files/styles/2560x1600/public/681001411.jpg?itok=7kTB6Lqc"/>
+<body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -136,11 +87,13 @@ function goPage(pParams, pUrl, pCallBackFunc){
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
+          <a class="navbar-brand" href="<%=rootPath%>/main.jsp">HOME</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-          <li><a  href="/main.jsp">HOME</a></li>
             <li><a href="/board/board_select.jsp">게시판가기</a></li>
+            <li><a href="/goods/goods_list.jsp">제품정보</a></li>
+            <li><a href="/role/role_select.jsp">권한정보가기</a></li>
             <li><a href="/user/logout_ok.jsp"><%=loginStr %></a></li>
           </ul>
           
