@@ -20,7 +20,7 @@
 		<tbody id="result_tbody">
 		</tbody>
 	</table>
-	<button id="btnInsert" class="btn btn-primary"  type="button">상품등록</button>
+	<button id="btnInsert" class="btn btn-primary"  type="button">회사등록</button>
 </div>
 <div class="jb-center" style="text-align: center">
 	<ul class="pagination" id="page">
@@ -29,7 +29,7 @@
 <script>
 
 	$("#btnInsert").click(function(){
-		location.href="/goods/goods_insert.jsp";
+		location.href="/vendor/vendor_insert.jsp";
 	})
 	$("#searchVendor").click(function() {
 		var viName = $("#viName").val().trim();
@@ -41,10 +41,23 @@
 		$.ajax({ 
 	    		type     : "POST"
 		    ,   url      : "/list.vendor"
-		    ,   dataType : "text" 
+		    ,   dataType : "json" 
 		    ,   data     : params
 		    ,   success : function(result){
-		    	$("#result_tbody").html(result);
+				$('#table').bootstrapTable('destroy');
+				var resultStr = "";
+				for(var i=0, max=result.length;i<max;i++){
+					var vendor = result[i];
+					resultStr += "<tr data-view='" + vendor.viNum + "'>";
+					resultStr +="<td class='text-center'>" + vendor.viNum + "</td>";
+					resultStr +="<td class='text-center'>" + vendor.viName + "</td>";
+					resultStr +="<td class='text-center'>" + vendor.viDesc + "</td>";
+					resultStr +="<td class='text-center'>" + vendor.viAddress + "</td>";
+					resultStr +="<td class='text-center'>" + vendor.viPhone + "</td>";
+					resultStr +="</tr>";
+				}
+				$('#result_tbody').html(resultStr);
+				
 		    }
 		    ,   error : function(xhr, status, e) {
 			    	alert("에러 : "+e);
@@ -54,26 +67,60 @@
 		});
 	});
 	
-	function callback(results) {
+	function callback(result) {
+		$("tbody[id='result_tbody']>tr[data-view]").click(function(){
+			var params = {};
+			params["viNum"] = this.getAttribute("data-view");
+			params["command"] = "view";
+// 			var page = {};
+// 			page["nowPage"] = pageInfo.nowPage;
+// 			params["page"] = page;
+			movePageWithAjax(params, "/list.vendor", callBackView);
+		});
 	}
-	
+	function callBackView(result){
+		var url = result.url + "?";
+		url += "&viNum=" + result.vendor.viNum;
+		url += "&viName=" + result.vendor.viName;
+		url += "&viDesc=" + result.vendor.viDesc;
+		url += "&viAddress=" + result.vendor.viAddress;
+		url += "&viPhone=" + result.vendor.viPhone;
+		location.href=url;
+	}
 	$(document).ready(function() {
 		var params = "command=list";
 		$.ajax({ 
 	    		type     : "POST"
 		    ,   url      : "/list.vendor"
-		    ,   dataType : "text" 
+		    ,   dataType : "json" 
 		    ,   data     : params
 		    ,   success : function(result){
-		    	$("#result_tbody").html(result);
+				$('#table').bootstrapTable('destroy');
+				var resultStr = "";
+				for(var i=0, max=result.length;i<max;i++){
+					var vendor = result[i];
+					resultStr += "<tr data-view='" + vendor.viNum + "'>";
+					resultStr +="<td class='text-center'>" + vendor.viNum + "</td>";
+					resultStr +="<td class='text-center'>" + vendor.viName + "</td>";
+					resultStr +="<td class='text-center'>" + vendor.viDesc + "</td>";
+					resultStr +="<td class='text-center'>" + vendor.viAddress + "</td>";
+					resultStr +="<td class='text-center'>" + vendor.viPhone + "</td>";
+					resultStr +="</tr>";
+				}
+				$('#result_tbody').html(resultStr);
+				callback(result);
+				alert("결과는"+result)//object 나옴.
 		    }
 		    ,   error : function(xhr, status, e) {
-			    	alert("에러 : "+e);
+			    	alert("에러list : "+e);
 			},
 			complete  : function() {
 			}
 		});
 	});
+
+	
+	
 </script>
 </body>
 </html>
