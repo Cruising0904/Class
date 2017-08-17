@@ -34,7 +34,10 @@
 	
 	if(nowPage=="null"){
 		nowPage = "1";
-	}insertGoods
+	}
+	$("#insertGoods").click(function(){
+		location.href="/goods/goods_insert.jsp";
+	})
 	$("#searchGoods").click(function() {
 		var giName = $("#giName").val().trim();
 		var viNum = $("#s_vendor").val().trim();
@@ -102,10 +105,11 @@
 			page["nowPage"] = pageInfo.nowPage;
 			params["page"] = page;
 			movePageWithAjax(params, "/list.goods", callBackView);
-		})
+		});
 	}
 	function callBackView(result){
-		var url = result.url + "?nowPage=" + result.page.nowPage + "&giNum=" + result.goods.giNum;
+		var url = result.url + "?nowPage=" + result.page.nowPage;
+		url += "&giNum=" + result.goods.giNum;
 		url += "&giName=" + result.goods.giName;
 		url += "&giDesc=" + result.goods.giDesc;
 		url += "&viNum=" + result.goods.viNum;

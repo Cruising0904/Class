@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,11 +22,27 @@ public class GoodsServlet extends HttpServlet{
 	
 	private static final long serialVersionUID = 1L;
 	private GoodsService gs = new GoodsService();
+	private Gson g = new Gson();
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{	
 		request.setCharacterEncoding("UTF-8");
 		String resultStr = "";
-		doProcess(response, resultStr);
+		String params = request.getParameter("param");
+		Goods goods = g.fromJson(params, Goods.class);
+		String command = goods.getCommand();
+		Page page = goods.getPage();
+		if(command.equals("view")) {
+			Goods resultGoods = gs.selectGoods(goods);
+			request.setAttribute("page",  page);
+			request.setAttribute("goods",  resultGoods);
+			request.setAttribute("url",  "/goods/goods_view.jsp");
+			RequestDispatcher rd =request.getRequestDispatcher("goods/goods_view.jsp"); 
+			try {
+				rd.forward(request,  response);
+			}catch(ServletException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
@@ -59,11 +76,28 @@ public class GoodsServlet extends HttpServlet{
 	    	int result = gs.deleteGoods(goods);
 	    	HashMap resultMap = new HashMap();
 	    	resultMap.put("page", page);
-	    	resultMap.put("msg", "»èÁ¦°¡ ¿Ï·á µÇ¾ú½À´Ï´Ù.");
+	    	resultMap.put("msg", "ì‚­ì œê°€ ì˜ ë˜ì—ˆìŠµë‹ˆë‹¤.");
 	    	resultMap.put("url", "/goods/goods_list.jsp");
 	    	if(result!=1){
-		    	resultMap.put("msg", "»èÁ¦°¡ ½ÇÆĞÇÏ¿´½À´Ï´Ù.");
+		    	resultMap.put("msg", "ì‚­ì œ ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤.");
 		    	resultMap.put("url", "");
+	    	}
+	    	String jsonStr = g.toJson(resultMap);
+	    	doProcess(response, jsonStr);
+	    }else if(command.equals("vendorlist")) {
+	    	List<Vendor> vendorList = gs.selectVendorsList();
+	    	HashMap resultMap = new HashMap();
+	    	resultMap.put("vendorList",  vendorList);
+	    	String jsonStr = g.toJson(resultMap);
+	    	doProcess(response, jsonStr);
+	    }else if(command.equals("insert")) {
+	    	int result = gs.insertGoods(goods);
+	    	HashMap resultMap = new HashMap();
+	    	resultMap.put("msg",  "ë“±ë¡ì´ ì˜ ë˜ì—ˆìŠµë‹ˆë‹¤.");
+	    	resultMap.put("url",  "/goods/goods_list.jsp");
+	    	if(result!=1) {
+	    		resultMap.put("msg", "ë“±ë¡ ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤.");
+	    		resultMap.put("url", "");
 	    	}
 	    	String jsonStr = g.toJson(resultMap);
 	    	doProcess(response, jsonStr);
