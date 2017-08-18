@@ -79,7 +79,14 @@ public class VendorServlet extends HttpServlet {
 //			System.out.println(resnum);
 //			System.out.println("hm");
 		} else if (command.equals("update")) {
-			
+			int resnum = vs.updateVendor(vendor);
+			HashMap hm = new HashMap();
+			if(resnum !=0) {
+				hm.put("msg", "실패하였습니다.");
+				hm.put("url", "");
+			}
+			hm.put("msg", "수정되었습니다.");
+			hm.put("url", "/vendor/vendor_list.jsp");
 		}
 	}
 

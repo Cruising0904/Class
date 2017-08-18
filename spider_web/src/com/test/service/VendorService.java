@@ -138,38 +138,39 @@ public class VendorService {
 		return 0;
 	}
 
-
+	public int updateVendor(Vendor vendor) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			String sql = "update goods_info";
+			sql += " set viname=?,";
+			sql += " videsc=?,";
+			sql += " viaddress=?";
+			sql += " viphone=?";
+			sql += " where Vinum=?";
+			con = DBConn2.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, vendor.getViName());
+			ps.setString(2, vendor.getViDesc());
+			ps.setString(3, vendor.getViAddress());
+			ps.setString(4,  vendor.getViPhone());
+			ps.setInt(4,  vendor.getViNum());
+			int result = ps.executeUpdate();
+			con.commit();
+			return result;
+		}catch(ClassNotFoundException e) {
+			e.printStackTrace();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				ps.close();
+				DBConn2.closeCon();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return 0;
+	}
 }
-//	public int updateGoods(Goods pGoods) {
-//		Connection con = null;
-//		PreparedStatement ps = null;
-//		try {
-//			String sql = "update goods_info";
-//			sql += " set giname=?,";
-//			sql += " gidesc=?,";
-//			sql += " vinum=?";
-//			sql += " where ginum=?";
-//			con = DBConn2.getCon();
-//			ps = con.prepareStatement(sql);
-//			ps.setString(1, pGoods.getGiName());
-//			ps.setString(2, pGoods.getGiDesc());
-//			ps.setInt(3,  pGoods.getViNum());
-//			ps.setInt(4, pGoods.getGiNum());
-//			int result = ps.executeUpdate();
-//			con.commit();
-//			return result;
-//		}catch(ClassNotFoundException e) {
-//			e.printStackTrace();
-//		}catch(SQLException e) {
-//			e.printStackTrace();
-//		}finally {
-//			try {
-//				ps.close();
-//				DBConn2.closeCon();
-//			}catch(SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		return 0;
-//	}
 	
