@@ -5,30 +5,53 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.test.common.DBConn2;
-import com.test.dto.Goods;
-import com.test.dto.Page;
 import com.test.dto.Vendor;
 
 public class VendorService {
-	Vendor v ;
-	public List<Vendor> selectVendorsList(String viName){
+	public Vendor vendorView(Vendor vd){
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
-			String sql = "select vinum, viname, videsc, viaddress, viphone, vicredat from vendor_info where 1=1";
-			if(viName!=null){
-				sql += " and viname like ?";
-			}
 			con = DBConn2.getCon();
+			String sql = "select * from vendor_info";
+			sql += " where vinum = ?";
 			ps = con.prepareStatement(sql);
-			if(viName!=null){
-				ps.setString(1, "%" + viName + "%");
+			ps.setInt(1, vd.getViNum());
+			ResultSet rs = ps.executeQuery();
+			Vendor vendor = new Vendor();
+			while(rs.next()){
+				vendor.setViNum(rs.getInt("vinum"));
+				vendor.setViName(rs.getString("viname"));
+				vendor.setViDesc(rs.getString("videsc"));
+				vendor.setViAddress(rs.getString("viaddress"));
+				vendor.setViPhone(rs.getString("viphone"));
 			}
+			return vendor;
+		}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				DBConn2.closeCon();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
+	public List<Vendor> selectVendor(Vendor vd){
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			con = DBConn2.getCon();
+			String sql = "select * from vendor_info";
+			ps = con.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			List<Vendor> vendorList = new ArrayList<Vendor>();
 			while(rs.next()){
@@ -38,7 +61,6 @@ public class VendorService {
 				vendor.setViDesc(rs.getString("videsc"));
 				vendor.setViAddress(rs.getString("viaddress"));
 				vendor.setViPhone(rs.getString("viphone"));
-				vendor.setViCredat(rs.getString("viCredat"));
 				vendorList.add(vendor);
 			}
 			return vendorList;
@@ -58,8 +80,7 @@ public class VendorService {
 	}
 	
 	
-	
-	public int insertVendors(Vendor vendor){
+	public int insertVendors(Vendor vd){
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -67,10 +88,10 @@ public class VendorService {
 					+ "values(?,?,?,?,DATE_FORMAT(NOW(), '%Y%m%d'),DATE_FORMAT(NOW(), '%H%i%s'))";
 			con = DBConn2.getCon();
 			ps = con.prepareStatement(sql);
-			ps.setString(1, v.getViName());
-			ps.setString(2, v.getViDesc());
-			ps.setString(3, v.getViAddress());
-			ps.setString(4, v.getViPhone());
+			ps.setString(1, vd.getViName());
+			ps.setString(2, vd.getViDesc());
+			ps.setString(3, vd.getViAddress());
+			ps.setString(4, vd.getViPhone());
 			
 			int result = ps.executeUpdate();
 			con.commit();
@@ -91,13 +112,14 @@ public class VendorService {
 	}
 	
 	public int deleteVendor(Vendor vendor){
+		
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
 			String sql = "delete from vendor_info where  vinum=?";
 			con = DBConn2.getCon(); 
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, v.getViNum());
+			ps.setInt(1, vendor.getViNum());
 			int result = ps.executeUpdate();
 			con.commit();
 			return result;
@@ -116,40 +138,7 @@ public class VendorService {
 		return 0;
 	}
 
-public Vendor selectVendor(Vendor vendor){
-	Connection con = null;
-	PreparedStatement ps = null;
-	try {
-		String sql = "select vinum, viname, videsc, viaddress, viphone, vicredat from vendor_info where 1=1";
-		sql	+=" where vinum=?";
-		con = DBConn2.getCon();
-		ps = con.prepareStatement(sql);
-		ps.setInt(1, v.getViNum());
-		ResultSet rs = ps.executeQuery();
-		while(rs.next()){
-			Vendor vend = new Vendor();
-			vend.setViNum(rs.getInt("vinum"));
-			vend.setViName(rs.getString("viname"));
-			vend.setViDesc(rs.getString("videsc"));
-			vend.setViAddress(rs.getString("viaddress"));
-			vend.setViPhone(rs.getString("viphone"));
-			vend.setViCredat(rs.getString("vicredat"));
-			return vendor;
-		}
-	}catch (ClassNotFoundException e) {
-		e.printStackTrace();
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}finally{
-		try {
-			ps.close();
-			DBConn2.closeCon();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	return null;
-}	
+
 }
 //	public int updateGoods(Goods pGoods) {
 //		Connection con = null;

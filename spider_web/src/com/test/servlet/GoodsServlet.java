@@ -73,6 +73,7 @@ public class GoodsServlet extends HttpServlet{
 	    	String jsonStr = g.toJson(resultMap);
 	    	doProcess(response, jsonStr);
 	    }else if(command.equals("delete")){
+	    	
 	    	int result = gs.deleteGoods(goods);
 	    	HashMap resultMap = new HashMap();
 	    	resultMap.put("page", page);
@@ -82,6 +83,7 @@ public class GoodsServlet extends HttpServlet{
 		    	resultMap.put("msg", "삭제 실패하였습니다.");
 		    	resultMap.put("url", "");
 	    	}
+	    	
 	    	String jsonStr = g.toJson(resultMap);
 	    	doProcess(response, jsonStr);
 	    }else if(command.equals("vendorlist")) {

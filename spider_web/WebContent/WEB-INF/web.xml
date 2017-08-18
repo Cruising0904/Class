@@ -51,4 +51,12 @@
     <servlet-name>VendorServlet</servlet-name>
     <url-pattern>*.vendor</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <servlet-name>TestServlet</servlet-name>
+    <servlet-class>com.test.servlet.TestServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TestServlet</servlet-name>
+    <url-pattern>*.test</url-pattern>
+  </servlet-mapping>
 </web-app>

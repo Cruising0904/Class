@@ -47,7 +47,7 @@ $(document).ready(function(){
 })
 
 function callbackInsert(result){
-	var alert(result.msg);
+	alert(result.msg);
 	location.href = result.url;
 }
 function callback(result){

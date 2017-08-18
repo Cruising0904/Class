@@ -29,7 +29,7 @@
 		</tr>
 		<tr>
 			<td colspan="2" align="center">
-				<button id="btnInsert" class="btn btn-primary" type ="button">상품등록</button>
+				<button id="btnInsert" class="btn btn-primary" type ="button">입력하기</button>
 			<button id="btnCancel" class="btn" type ="button">취소</button>
 				</td>
 		</tr>	
@@ -38,6 +38,23 @@
 </div>
 <script>
 $("#btnInsert").click(function(){
+	var viName =$("#viName").val().trim()
+	var viDesc=$("#viDesc").val().trim()
+	var viAddress=$("#viAddress").val().trim()
+	var viPhone=$("#viPhone").val().trim() 
+	if(viName==""){
+		alert("회사이름")
+		viName.focus();
+	}else if(viDesc==""){
+		alert("회사정보")
+		viName.focus();
+	}else if(viAddress==""){
+		alert("회사주소")
+		viAddress.focus();
+	}else if(viPhone==""){
+		alert("회사연락처")
+		viPhone.focus();
+	}else{	
 	var params = {};
 	params["command"]="insert";
 	params["viName"]=$("#viName").val().trim();
@@ -45,13 +62,14 @@ $("#btnInsert").click(function(){
 	params["viAddress"]=$("#viAddress").val().trim();
 	params["viPhone"]=$("#viPhone").val().trim();
 	movePageWithAjax(params, "/list.vendor", callbackInsert);
+	}
 })
 
 $("#btnCancel").click(function(){
 	history.back();
 })
 function callbackInsert(result){
-	alert("1");
+	alert("result");
 	location.href = result.url;
 	}
 </script>

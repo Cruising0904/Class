@@ -11,29 +11,24 @@
 			</tr>
 			<tr>
 				<td class="col-md-2">회사번호</td>
-				<td class="col-md-4" colspan="2">${vendor.viNum}</td>
+				<td class="col-md-4" colspan="2"><%=request.getParameter("viNum") %></td>
 			</tr>
 			<tr>
 				<td>회사이름</td>
-				<td colspan="2">${vendor.viName}</td>
+				<td colspan="2"><%=request.getParameter("viName") %></td>
 			</tr>
 			<tr>
 				<td>회사설명</td>
-				<td colspan="2">${vendor.giDesc}</td>
+				<td colspan="2"><%=request.getParameter("viDesc") %></td>
 			</tr>
 			<tr>
 				<td>회사주소</td>
-				<td colspan="2">${vendor.viAddress}</td>
+				<td colspan="2"><%=request.getParameter("viAddress") %></td>
 			</tr>
 			<tr>
 				<td>회사연락처</td>
-				<td colspan="2">${vendor.viPhone}</td>
+				<td colspan="2"><%=request.getParameter("viPhone") %></td>
 			</tr>
-			<tr>
-				<td>회사설립시기</td>
-				<td colspan="2">${vendor.viCredat}</td>
-			</tr>
-			
 			<tr>
 				<td>
 					<button id="btnUpdate" class="btn btn-md-2 btn-block" type="button">수정</button>
@@ -54,11 +49,8 @@ $("#btnDelete").click(function(){
 	var isDelete = confirm("해당 상품을 삭제 하시겠습니까?");
 	if(isDelete){
 		var params = {};
-		params["viNum"] = "${vendor.viNum}";
+		params["viNum"] = "<%=request.getParameter("viNum")%>";
 		params["command"] = "delete"
-		var page = {};
-		page["nowPage"] = "${page.nowPage}";
-		params["page"] = page;
 		movePageWithAjax(params, "/list.vendor", callBackView);
 	}
 });
@@ -66,11 +58,11 @@ $("#btnDelete").click(function(){
 function callBackView(result){
 	alert(result.msg);
 	if(result.url!=""){
-		location.href = result.url + "?nowPage=" + result.page.nowPage;
+		location.href = "/vendor/vendor_list.jsp";
 	}
 }
 $("#btnUpdate").click(function(){
-	location.href="/vendor/vendor_update.jsp?nowPage=" + <%=request.getParameter("nowPage")%> + "&viNum=" + <%=request.getParameter("viNum")%>
+	location.href="/vendor/vendor_update.jsp?viNum=" + <%=request.getParameter("viNum")%>
 })
 $("#btnGoList").click(function(){
 	location.href="/vendor/vendor_list.jsp?nowPage" + <%=request.getParameter("nowPage")%>
