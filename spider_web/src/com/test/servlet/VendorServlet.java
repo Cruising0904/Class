@@ -14,12 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.test.dto.Goods;
 import com.test.dto.Vendor;
-import com.test.service.VendorService;
+import com.test.service.implement.VendorServiceImpl;
 
 public class VendorServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private VendorService vs = new VendorService();
+	private VendorServiceImpl vs = new VendorServiceImpl();
 	private Gson g = new Gson();
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -71,13 +71,6 @@ public class VendorServlet extends HttpServlet {
 			String json = g.toJson(hm);
 			doProcess(response, json);
 			
-//			System.out.println("command="+command+" "+"viNum="+vendor.getViNum());
-//			System.out.println("viName="+vendor.getViName());
-//			System.out.println("viAddress="+vendor.getViAddress());
-//			System.out.println("viDesc="+vendor.getViDesc());
-//			System.out.println("viPhone="+vendor.getViPhone());
-//			System.out.println(resnum);
-//			System.out.println("hm");
 		} else if (command.equals("update")) {
 			int resnum = vs.updateVendor(vendor);
 			HashMap hm = new HashMap();
@@ -87,7 +80,11 @@ public class VendorServlet extends HttpServlet {
 			}
 			hm.put("msg", "수정되었습니다.");
 			hm.put("url", "/vendor/vendor_list.jsp");
+			result = g.toJson(hm);
+			doProcess(response,result);
+			System.out.println(hm);
 		}
+		System.out.println(command);
 	}
 
 	public void doProcess(HttpServletResponse response, String writeStr) throws IOException {

@@ -30,7 +30,6 @@
   		<param-value>utf-8</param-value>
   	</init-param>
   </filter>
-  
   <filter-mapping>
   	<filter-name>Set Character Encoding</filter-name>
   	<url-pattern>/*</url-pattern>
@@ -42,6 +41,14 @@
   <servlet-mapping>
     <servlet-name>GoodsServlet</servlet-name>
     <url-pattern>*.goods</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>FormServlet</servlet-name>
+    <servlet-class>com.test.servlet.test.FormServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FormServlet</servlet-name>
+    <url-pattern>*.formtest</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>VendorServlet</servlet-name>

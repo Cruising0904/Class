@@ -42,39 +42,14 @@
 		params["viAddress"] = $("#viAddress").val();
 		params["viPhone"] = $("#viPhone").val();
 		params["viNum"] = "<%=request.getParameter("viNum")%>";
-		movePageWithAjax(params, "/list.goods", callbackInsert);
-	})
-	
-	$(document).ready(function(){
-		var params = {};
-		params["command"] = "vendorlist";
 		movePageWithAjax(params, "/list.vendor", callback);
 	})
-	
-	
+		
 	function callback(result){
-		var vendorList = result.vendorList;
-		var selStr = "<option value=''>회사선택</option>";
-		for (var i = 0, max = vendorList.length; i < max; i++) {
-			var vendor = vendorList[i];
-			selStr += "<option value='" + vendor.viNum + "' >" + vendor.viName
-					+ "</option>";
+		alert(result.msg);
+		location.href=result.url;
 		}
-		$("#s_vendor").html(selStr);
-
-		var params = {};
-		params["command"] = "view";
-		params["giNum"] = "<%=request.getParameter("giNum")%>";
-		var page = {}
-		page["nowPage"] = "<%=request.getParameter("nowPage")%>";
-		params["page"] = page;
-		movePageWithAjax(params, "/list.goods", callback2);
-	}
-	function callback2(result){
-		$("#giDesc").val(result.goods.giDesc);
-		$("#giName").val(result.goods.giName);
-		$("#s_vendor").val(result.goods.viNum);
-	}
+		
 	$("#goList").click(function(){
 		history.back();
 	})
