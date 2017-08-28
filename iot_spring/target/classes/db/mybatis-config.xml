@@ -12,7 +12,7 @@
     	<typeAlias alias="user" type="com.iot.sp.user.dto.UserInfo"/>
 	</typeAliases>
 	<mappers>
-		<mapper resource="com/iot/sp2/user/sql/user_sql.xml" />
+		<mapper resource="com/iot/sp/user/sql/user_sql.xml" />
 	</mappers>
 </configuration>
 
