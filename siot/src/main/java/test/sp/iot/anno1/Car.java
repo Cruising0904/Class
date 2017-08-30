@@ -1,8 +1,8 @@
 package test.sp.iot.anno1;
 
-import org.springframework.stereotype.Component;
+import javax.inject.Named;
 
-@Component
+@Named
 public class Car {
 	private String name;
 	public Car() {}

@@ -9,6 +9,8 @@
 	<configs>
 		<config>src/main/resources/xml1/ioc.xml</config>
 		<config>src/main/java/test/sp/iot/anno1/gfjyfty.xml</config>
+		<config>src/main/java/bean.xml</config>
+		<config>src/main/resources/bean.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
