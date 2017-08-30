@@ -37,7 +37,7 @@ private static final long serialVersionUID = 1L;
 			int dNum = Integer.parseInt(req.getParameter("d_num"));
 			System.out.println("삭제할 번호 :" + dNum);
 			bi.setdNum(dNum);
-			if(bs.deleteBoard()){
+			if(bs.deleteBoard(bi)){
 				System.out.println("정상적으로 삭제되었습니다");
 				doProcess(resq, "정상적으로 삭제되었습니다");
 			}else{
@@ -50,7 +50,7 @@ private static final long serialVersionUID = 1L;
 			String content = req.getParameter("content"); 
 			String writer = req.getParameter("writer"); 
 			System.out.println(title+" "+content+" "+ writer);
-			if(bs.insertBoard(hm)){
+			if(bs.insertBoard(bi)){
 				System.out.println("정상적으로 입력되었습니다");
 				doProcess(resq, "정상적으로 입력되었습니다");
 			}else{
@@ -60,7 +60,7 @@ private static final long serialVersionUID = 1L;
 			
 			
 		}else if(command.equals("UPDATE")){
-			if(bs.updateBoard(hm)){
+			if(bs.updateBoard(bi)){
 				System.out.println("정상적으로 수정되었습니다");
 				doProcess(resq, "정상적으로 수정되었습니다*");
 			}else{

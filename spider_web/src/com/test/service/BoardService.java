@@ -21,11 +21,11 @@ public class BoardService{
 		ps = null;
 		try {
 			con= DBConn2.getCon();
-			sql = "insert into board(title,content,writer,reg_date)values(?,?,?,now())";
+			sql = "insert into board(title,content,creusr,reg_date)values(?,?,?,now())";
 			ps = con.prepareStatement(sql);
-			ps.setString(1, hm.get("title"));
-			ps.setString(2, hm.get("content"));
-			ps.setString(3, hm.get("writer"));
+			ps.setString(1, bi.getBiTitle());
+			ps.setString(2, bi.getBiContent());
+			ps.setString(3, bi.getCreUsr());
 						
 		   int result = ps.executeUpdate();
 		   if(result==1){
@@ -53,7 +53,7 @@ public class BoardService{
 			con= DBConn2.getCon();
 			sql = "delete from board where num =?";
 			ps = con.prepareStatement(sql);
-			ps.setString(1, hm.get("d_num"));
+			ps.setInt(1, bi.getdNum());
 		   int result = ps.executeUpdate();
 		   if(result==1){
 			   con.commit();
@@ -73,17 +73,17 @@ public class BoardService{
 		}
 		return false;
 	}
-	public boolean updateBoard(HashMap<String, String> hm){
+	public boolean updateBoard(BoardInfo bi){
 		con = null;
 		ps = null;
 		try {
 			con= DBConn2.getCon();
-			sql = "update board set title=?,content=?,writer=? where num =?";
+			sql = "update board set title=?,content=?,creUsr=? where num =?";
 			ps = con.prepareStatement(sql);
-			ps.setString(4, hm.get("board_num"));
-			ps.setString(1, hm.get("title"));
-			ps.setString(2, hm.get("content"));
-			ps.setString(3, hm.get("writer"));
+			ps.setInt(4, bi.getBiNum());
+			ps.setString(1, bi.getBiTitle());
+			ps.setString(2, bi.getBiContent());
+			ps.setString(3, bi.getCreUsr());
 		   int result = ps.executeUpdate();
 		   if(result==1){
 			   con.commit();
@@ -108,7 +108,7 @@ public class BoardService{
 		ps = null;
 		try {
 			con= DBConn2.getCon();
-			sql = "select num, title, content, writer, reg_date from board ";
+			sql = "select num, title, content, creusr, reg_date from board ";
 			if(hm1.get("s_name")!=null){
 				sql+=" where user_name like ?";
 			}
