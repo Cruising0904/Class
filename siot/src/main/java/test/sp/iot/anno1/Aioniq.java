@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class Aioniq implements Maker{
-	@Autowired
+	
 	private Car car;
 	public Car sellCar(Money money) {
 		car.setName("Aioniq");

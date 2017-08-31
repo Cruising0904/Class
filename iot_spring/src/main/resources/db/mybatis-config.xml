@@ -13,6 +13,7 @@
 	</typeAliases>
 	<mappers>
 		<mapper resource="com/iot/sp/user/sql/user_sql.xml" />
+		<mapper resource="com/iot/sp/board/sql/board_sql.xml" />
 	</mappers>
 </configuration>
 
