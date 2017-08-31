@@ -40,7 +40,7 @@ public class Execute {
 			w.work();
 			w.getOffWork();
 		}
-		e.w.work();
+//		e.w.work();
 		System.out.println(e.map);
 	}
 }
