@@ -54,14 +54,12 @@ function alertOp(){
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="${rootPath}/main.jsp">HOME</a>
+          <a class="navbar-brand" href="${roothPath }/main">HOME</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li><a href="/board/board_select.jsp">게시판가기</a></li>
-            <li><a href="/user/user_info.jsp">유저정보가기</a></li>
-            <li><a href="/role/role_select.jsp">권한정보가기</a></li>
-            <li><a href="/user/logout_ok.jsp">로그아웃</a></li>
+            <li><a href="/sp/user/list">유저정보가기</a></li>
+            <li><a href="/sp/logout_ok">로그아웃</a></li>
           </ul>
           
         </div><!--/.nav-collapse -->

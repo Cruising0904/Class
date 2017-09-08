@@ -17,6 +17,14 @@ public class UserInfo{
 	private String gender;
 	private int departNum;
 	private int userNum;
+	private boolean saveId;
+	
+	public boolean isSaveId() {
+		return saveId;
+	}
+	public void setSaveId(boolean saveId) {
+		this.saveId = saveId;
+	}
 	public String getUserId() {
 		return userId;
 	}
@@ -88,5 +96,12 @@ public class UserInfo{
 	}
 	public void setUserNum(int userNum) {
 		this.userNum = userNum;
+	}
+	@Override
+	public String toString() {
+		return "UserInfo [userId=" + userId + ", userPwd=" + userPwd + ", userName=" + userName + ", age=" + age
+				+ ", address=" + address + ", hp1=" + hp1 + ", hp2=" + hp2 + ", hp3=" + hp3 + ", userNum=" + userNum
+				+ ", departNum=" + departNum + ", userRoleLevel=" + userRoleLevel + ", gender=" + gender + ", saveId="
+				+ saveId + "]";
 	}
 }
